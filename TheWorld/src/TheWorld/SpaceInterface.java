@@ -1,0 +1,5 @@
+package TheWorld;
+
+interface SpaceInterface {
+
+}
