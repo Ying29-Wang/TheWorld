@@ -1,0 +1,186 @@
+the character is in the Space No.0 Armory ; upleft:22,19; downright：23,26;
+includes 1 items
+includes Revolver ,cause 3 hurt
+it has 3 neighbors
+ Space No.1 Billiard Room is a neighbor
+ Space No.3 Dining Hall is a neighbor
+ Space No.4 Drawing Room is a neighbor
+
+the character is in the Space No.1 Billiard Room ; upleft:16,21; downright：21,28;
+includes 1 items
+includes Billiard Cue ,cause 2 hurt
+it has 3 neighbors
+ Space No.0 Armory is a neighbor
+ Space No.3 Dining Hall is a neighbor
+ Space No.18 Trophy Room is a neighbor
+
+the character is in the Space No.2 Carriage House ; upleft:28,0; downright：35,5;
+includes 2 items
+includes Chain Saw ,cause 4 hurt
+includes Big Red Hammer ,cause 4 hurt
+it has 1 neighbors
+ Space No.20 Winter Garden is a neighbor
+
+the character is in the Space No.3 Dining Hall ; upleft:12,11; downright：21,20;
+includes 0 items
+it has 8 neighbors
+ Space No.0 Armory is a neighbor
+ Space No.1 Billiard Room is a neighbor
+ Space No.4 Drawing Room is a neighbor
+ Space No.8 Kitchen is a neighbor
+ Space No.14 Parlor is a neighbor
+ Space No.17 Tennessee Room is a neighbor
+ Space No.18 Trophy Room is a neighbor
+ Space No.19 Wine Cellar is a neighbor
+
+the character is in the Space No.4 Drawing Room ; upleft:22,13; downright：25,18;
+includes 1 items
+includes Letter Opener ,cause 2 hurt
+it has 4 neighbors
+ Space No.0 Armory is a neighbor
+ Space No.3 Dining Hall is a neighbor
+ Space No.5 Foyer is a neighbor
+ Space No.19 Wine Cellar is a neighbor
+
+the character is in the Space No.5 Foyer ; upleft:26,13; downright：27,18;
+includes 0 items
+it has 2 neighbors
+ Space No.4 Drawing Room is a neighbor
+ Space No.15 Piazza is a neighbor
+
+the character is in the Space No.6 Green House ; upleft:28,26; downright：35,29;
+includes 2 items
+includes Trowel ,cause 2 hurt
+includes Pinking Shears ,cause 2 hurt
+it has 1 neighbors
+ Space No.7 Hedge Maze is a neighbor
+
+the character is in the Space No.7 Hedge Maze ; upleft:30,20; downright：35,25;
+includes 1 items
+includes Loud Noise ,cause 2 hurt
+it has 2 neighbors
+ Space No.6 Green House is a neighbor
+ Space No.15 Piazza is a neighbor
+
+the character is in the Space No.8 Kitchen ; upleft:16,3; downright：21,10;
+includes 2 items
+includes Crepe Pan ,cause 3 hurt
+includes Sharp Knife ,cause 3 hurt
+it has 3 neighbors
+ Space No.3 Dining Hall is a neighbor
+ Space No.14 Parlor is a neighbor
+ Space No.19 Wine Cellar is a neighbor
+
+the character is in the Space No.9 Lancaster Room ; upleft:0,3; downright：5,8;
+includes 1 items
+includes Silken Cord ,cause 3 hurt
+it has 2 neighbors
+ Space No.11 Lilac Room is a neighbor
+ Space No.16 Servants' Quarters is a neighbor
+
+the character is in the Space No.10 Library ; upleft:4,23; downright：9,28;
+includes 0 items
+it has 3 neighbors
+ Space No.12 Master Suite is a neighbor
+ Space No.13 Nursery is a neighbor
+ Space No.18 Trophy Room is a neighbor
+
+the character is in the Space No.11 Lilac Room ; upleft:2,9; downright：7,14;
+includes 1 items
+includes Tight Hat ,cause 2 hurt
+it has 4 neighbors
+ Space No.9 Lancaster Room is a neighbor
+ Space No.12 Master Suite is a neighbor
+ Space No.16 Servants' Quarters is a neighbor
+ Space No.17 Tennessee Room is a neighbor
+
+the character is in the Space No.12 Master Suite ; upleft:2,15; downright：7,22;
+includes 1 items
+includes Shoe Horn ,cause 2 hurt
+it has 4 neighbors
+ Space No.10 Library is a neighbor
+ Space No.11 Lilac Room is a neighbor
+ Space No.13 Nursery is a neighbor
+ Space No.17 Tennessee Room is a neighbor
+
+the character is in the Space No.13 Nursery ; upleft:0,23; downright：3,28;
+includes 1 items
+includes Bad Cream ,cause 2 hurt
+it has 2 neighbors
+ Space No.10 Library is a neighbor
+ Space No.12 Master Suite is a neighbor
+
+the character is in the Space No.14 Parlor ; upleft:10,5; downright：15,10;
+includes 0 items
+it has 4 neighbors
+ Space No.3 Dining Hall is a neighbor
+ Space No.8 Kitchen is a neighbor
+ Space No.16 Servants' Quarters is a neighbor
+ Space No.17 Tennessee Room is a neighbor
+
+the character is in the Space No.15 Piazza ; upleft:28,12; downright：35,19;
+includes 1 items
+includes Civil War Cannon ,cause 3 hurt
+it has 3 neighbors
+ Space No.5 Foyer is a neighbor
+ Space No.7 Hedge Maze is a neighbor
+ Space No.20 Winter Garden is a neighbor
+
+the character is in the Space No.16 Servants' Quarters ; upleft:6,3; downright：9,8;
+includes 1 items
+includes Broom Stick ,cause 2 hurt
+it has 3 neighbors
+ Space No.9 Lancaster Room is a neighbor
+ Space No.11 Lilac Room is a neighbor
+ Space No.14 Parlor is a neighbor
+
+the character is in the Space No.17 Tennessee Room ; upleft:8,11; downright：11,20;
+includes 0 items
+it has 5 neighbors
+ Space No.3 Dining Hall is a neighbor
+ Space No.11 Lilac Room is a neighbor
+ Space No.12 Master Suite is a neighbor
+ Space No.14 Parlor is a neighbor
+ Space No.18 Trophy Room is a neighbor
+
+the character is in the Space No.18 Trophy Room ; upleft:10,21; downright：15,26;
+includes 2 items
+includes Duck Decoy ,cause 3 hurt
+includes Monkey Hand ,cause 2 hurt
+it has 4 neighbors
+ Space No.1 Billiard Room is a neighbor
+ Space No.3 Dining Hall is a neighbor
+ Space No.10 Library is a neighbor
+ Space No.17 Tennessee Room is a neighbor
+
+the character is in the Space No.19 Wine Cellar ; upleft:22,5; downright：23,12;
+includes 2 items
+includes Rat Poison ,cause 2 hurt
+includes Piece of Rope ,cause 2 hurt
+it has 3 neighbors
+ Space No.3 Dining Hall is a neighbor
+ Space No.4 Drawing Room is a neighbor
+ Space No.8 Kitchen is a neighbor
+
+the character is in the Space No.20 Winter Garden ; upleft:30,6; downright：35,11;
+includes 0 items
+it has 2 neighbors
+ Space No.2 Carriage House is a neighbor
+ Space No.15 Piazza is a neighbor
+
+the character is in the Space No.0 Armory ; upleft:22,19; downright：23,26;
+includes 1 items
+includes Revolver ,cause 3 hurt
+it has 3 neighbors
+ Space No.1 Billiard Room is a neighbor
+ Space No.3 Dining Hall is a neighbor
+ Space No.4 Drawing Room is a neighbor
+
+the character is in the Space No.1 Billiard Room ; upleft:16,21; downright：21,28;
+includes 1 items
+includes Billiard Cue ,cause 2 hurt
+it has 3 neighbors
+ Space No.0 Armory is a neighbor
+ Space No.3 Dining Hall is a neighbor
+ Space No.18 Trophy Room is a neighbor
+
