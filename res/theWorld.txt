@@ -1,0 +1,185 @@
+the character is in the Space No.0 Throne Room; upleft:2,4; downright:10,8;
+includes 1 items
+- Curse Whip, cause 3 damage
+it has 2 neighbors
+- Space No.2 Blood Fountain is a neighbor
+- Space No.15 Alchemy Lab is a neighbor
+
+the character is in the Space No.1 Grand Ballroom; upleft:8,18; downright:24,23;
+includes 1 items
+- Soulreaver Axe, cause 2 damage
+it has 8 neighbors
+- Space No.2 Blood Fountain is a neighbor
+- Space No.3 Coffin Chamber is a neighbor
+- Space No.4 Bat Tower is a neighbor
+- Space No.6 Torture Chamber is a neighbor
+- Space No.7 Dark Library is a neighbor
+- Space No.8 Shadow Gallery is a neighbor
+- Space No.11 Crypt is a neighbor
+- Space No.12 Ritual Hall is a neighbor
+
+the character is in the Space No.2 Blood Fountain; upleft:6,9; downright:12,17;
+includes 2 items
+- Nosferatu's Claw, cause 4 damage
+- Hellfire Mace, cause 4 damage
+it has 6 neighbors
+- Space No.0 Throne Room is a neighbor
+- Space No.1 Grand Ballroom is a neighbor
+- Space No.7 Dark Library is a neighbor
+- Space No.8 Shadow Gallery is a neighbor
+- Space No.15 Alchemy Lab is a neighbor
+- Space No.16 Guard Room is a neighbor
+
+the character is in the Space No.3 Coffin Chamber; upleft:25,15; downright:37,20;
+includes 0 items
+it has 3 neighbors
+- Space No.1 Grand Ballroom is a neighbor
+- Space No.9 Secret Passage is a neighbor
+- Space No.18 Potion Room is a neighbor
+
+the character is in the Space No.4 Bat Tower; upleft:18,24; downright:20,27;
+includes 1 items
+- Vampire's Fang Dagger, cause 2 damage
+it has 3 neighbors
+- Space No.1 Grand Ballroom is a neighbor
+- Space No.11 Crypt is a neighbor
+- Space No.17 Feeding Hall is a neighbor
+
+the character is in the Space No.5 Dungeon; upleft:30,25; downright:37,31;
+includes 0 items
+it has 1 neighbors
+- Space No.18 Potion Room is a neighbor
+
+the character is in the Space No.6 Torture Chamber; upleft:6,24; downright:10,29;
+includes 2 items
+- Bone Spear, cause 2 damage
+- Widow's Kiss Bow, cause 2 damage
+it has 5 neighbors
+- Space No.1 Grand Ballroom is a neighbor
+- Space No.7 Dark Library is a neighbor
+- Space No.12 Ritual Hall is a neighbor
+- Space No.13 Moonlit Balcony is a neighbor
+- Space No.19 Mirror Room is a neighbor
+
+the character is in the Space No.7 Dark Library; upleft:6,18; downright:7,23;
+includes 1 items
+- Gravekeeper's Spade, cause 2 damage
+it has 5 neighbors
+- Space No.1 Grand Ballroom is a neighbor
+- Space No.2 Blood Fountain is a neighbor
+- Space No.6 Torture Chamber is a neighbor
+- Space No.16 Guard Room is a neighbor
+- Space No.19 Mirror Room is a neighbor
+
+the character is in the Space No.8 Shadow Gallery; upleft:13,12; downright:21,17;
+includes 2 items
+- Bloodthirst Blade, cause 3 damage
+- Nightmare Crossbow, cause 3 damage
+it has 4 neighbors
+- Space No.1 Grand Ballroom is a neighbor
+- Space No.2 Blood Fountain is a neighbor
+- Space No.10 Vampire's Lair is a neighbor
+- Space No.14 Blacksmith's Forge is a neighbor
+
+the character is in the Space No.9 Secret Passage; upleft:31,10; downright:33,14;
+includes 1 items
+- Wraith’s Bow, cause 3 damage
+it has 2 neighbors
+- Space No.3 Coffin Chamber is a neighbor
+- Space No.21 Cursed Armory is a neighbor
+
+the character is in the Space No.10 Vampire's Lair; upleft:15,6; downright:20,11;
+includes 0 items
+it has 3 neighbors
+- Space No.8 Shadow Gallery is a neighbor
+- Space No.14 Blacksmith's Forge is a neighbor
+- Space No.15 Alchemy Lab is a neighbor
+
+the character is in the Space No.11 Crypt; upleft:16,24; downright:17,27;
+includes 1 items
+- Cursed Morningstar, cause 2 damage
+it has 4 neighbors
+- Space No.1 Grand Ballroom is a neighbor
+- Space No.4 Bat Tower is a neighbor
+- Space No.12 Ritual Hall is a neighbor
+- Space No.17 Feeding Hall is a neighbor
+
+the character is in the Space No.12 Ritual Hall; upleft:11,24; downright:15,32;
+includes 1 items
+- Shadow Scythe, cause 2 damage
+it has 4 neighbors
+- Space No.1 Grand Ballroom is a neighbor
+- Space No.6 Torture Chamber is a neighbor
+- Space No.11 Crypt is a neighbor
+- Space No.17 Feeding Hall is a neighbor
+
+the character is in the Space No.13 Moonlit Balcony; upleft:2,26; downright:5,27;
+includes 1 items
+- Bloodbound Shield, cause 2 damage
+it has 2 neighbors
+- Space No.6 Torture Chamber is a neighbor
+- Space No.19 Mirror Room is a neighbor
+
+the character is in the Space No.14 Blacksmith's Forge; upleft:21,9; downright:23,11;
+includes 0 items
+it has 2 neighbors
+- Space No.8 Shadow Gallery is a neighbor
+- Space No.10 Vampire's Lair is a neighbor
+
+the character is in the Space No.15 Alchemy Lab; upleft:11,4; downright:14,8;
+includes 1 items
+- Crimson Halberd, cause 3 damage
+it has 3 neighbors
+- Space No.0 Throne Room is a neighbor
+- Space No.2 Blood Fountain is a neighbor
+- Space No.10 Vampire's Lair is a neighbor
+
+the character is in the Space No.16 Guard Room; upleft:3,13; downright:5,20;
+includes 1 items
+- Eternal Scepter, cause 2 damage
+it has 3 neighbors
+- Space No.2 Blood Fountain is a neighbor
+- Space No.7 Dark Library is a neighbor
+- Space No.19 Mirror Room is a neighbor
+
+the character is in the Space No.17 Feeding Hall; upleft:16,28; downright:27,31;
+includes 0 items
+it has 3 neighbors
+- Space No.4 Bat Tower is a neighbor
+- Space No.11 Crypt is a neighbor
+- Space No.12 Ritual Hall is a neighbor
+
+the character is in the Space No.18 Potion Room; upleft:30,21; downright:37,24;
+includes 2 items
+- Spectral Blade, cause 3 damage
+- Fangstinger Sickle, cause 2 damage
+it has 2 neighbors
+- Space No.3 Coffin Chamber is a neighbor
+- Space No.5 Dungeon is a neighbor
+
+the character is in the Space No.19 Mirror Room; upleft:3,21; downright:5,25;
+includes 2 items
+- Moonlight Rapier, cause 2 damage
+- Gargoyle Hammer, cause 2 damage
+it has 4 neighbors
+- Space No.6 Torture Chamber is a neighbor
+- Space No.7 Dark Library is a neighbor
+- Space No.13 Moonlit Balcony is a neighbor
+- Space No.16 Guard Room is a neighbor
+
+the character is in the Space No.20 Blood Chamber; upleft:2,34; downright:12,36;
+includes 0 items
+it has 0 neighbors
+
+the character is in the Space No.21 Cursed Armory; upleft:29,3; downright:35,9;
+includes 0 items
+it has 1 neighbors
+- Space No.9 Secret Passage is a neighbor
+
+the character is in the Space No.0 Throne Room; upleft:2,4; downright:10,8;
+includes 1 items
+- Curse Whip, cause 3 damage
+it has 2 neighbors
+- Space No.2 Blood Fountain is a neighbor
+- Space No.15 Alchemy Lab is a neighbor
+

@@ -1,0 +1,46 @@
+40 40 The Dracula's haunted Castle
+200 The Earl Decuras
+22
+2 4 10 8 Throne Room
+8 18 24 23 Grand Ballroom
+6 9 12 17 Blood Fountain
+25 15 37 20 Coffin Chamber
+18 24 20 27  Bat Tower
+30 25 37 31 Dungeon
+6 24 10 29 Torture Chamber
+6 18 7 23 Dark Library
+13 12 21 17 Shadow Gallery
+31 10 33 14 Secret Passage
+15 6 20 11 Vampire's Lair
+16 24 17 27 Crypt
+11 24 15 32 Ritual Hall
+2 26 5 27 Moonlit Balcony
+21 9 23 11 Blacksmith's Forge
+11 4 14 8 Alchemy Lab
+3 13 5 20 Guard Room
+16 28 27 31 Feeding Hall
+30 21 37 24 Potion Room
+3 21 5 25 Mirror Room
+2 34 12 36 Blood Chamber
+29 3 35 9 Cursed Armory
+20
+8 3 Bloodthirst Blade
+4 2 Vampire's Fang Dagger
+12 2 Shadow Scythe
+8 3 Nightmare Crossbow
+0 3 Curse Whip
+15 3 Crimson Halberd
+2 4 Nosferatu's Claw
+16 2 Eternal Scepter
+1 2 Soulreaver Axe
+19 2 Moonlight Rapier
+6 2 Bone Spear
+2 4 Hellfire Mace
+6 2 Widow's Kiss Bow
+18 3 Spectral Blade
+13 2 Bloodbound Shield
+18 2 Fangstinger Sickle
+11 2 Cursed Morningstar
+19 2 Gargoyle Hammer
+9 3 Wraith’s Bow
+7 2 Gravekeeper's Spade
