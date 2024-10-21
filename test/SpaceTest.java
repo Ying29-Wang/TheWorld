@@ -1,26 +1,33 @@
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import theworld.Item;
+import theworld.Player;
 import theworld.Space;
 import theworld.SpaceInterface;
 
+
+
+
 /**
- * Test class for {@code Space}, including methods for creating spaces, 
- * managing items, and calculating neighbor spaces.
+ * Test class for {@code Space}, including methods for creating spaces, managing
+ * items, and calculating neighbor spaces.
  */
 public class SpaceTest {
 
   private Item item;
   private List<SpaceInterface> spaces;
+  private Player player;
 
   @Before
-  public void createItem() {
+  public void setUp() {
     this.item = new Item(0, "mop", 5);
+    this.player = new Player(0, "John", 2, false);
   }
 
   /**
@@ -32,8 +39,8 @@ public class SpaceTest {
     this.spaces.add(new Space(0, "kitchen", new int[] { 10, 10 }, new int[] { 20, 20 }));
     this.spaces.add(new Space(1, "dining room", new int[] { 21, 15 }, new int[] { 26, 35 }));
     this.spaces.add(new Space(2, "living room", new int[] { 15, 21 }, new int[] { 20, 28 }));
-    this.spaces.add(new Space(1, "gym", new int[] { 10, 29 }, new int[] { 18, 50 }));
-    this.spaces.add(new Space(2, "cottage", new int[] { 26, 50 }, new int[] { 33, 55 }));
+    this.spaces.add(new Space(3, "gym", new int[] { 10, 29 }, new int[] { 18, 50 }));
+    this.spaces.add(new Space(4, "cottage", new int[] { 26, 50 }, new int[] { 33, 55 }));
   }
 
   /**
@@ -88,7 +95,6 @@ public class SpaceTest {
     Space s = new Space(0, "kitchen", new int[] { 10, 5 }, new int[] { 15, 8 });
     assertEquals(s.getUpLeft()[0], 10);
     assertEquals(s.getUpLeft()[1], 5);
-
   }
 
   /**
@@ -184,7 +190,30 @@ public class SpaceTest {
             + "- mop, cause 5 damage\n" + "it has 2 neighbors\n"
             + "- Space No.1 dining room is a neighbor\n"
             + "- Space No.2 living room is a neighbor\n");
-
   }
 
+  /**
+   * test add player to the space.
+   */
+  @Test
+  public void testAddPlayer() {
+    Space s = new Space(0, "kitchen", new int[] { 10, 5 }, new int[] { 15, 8 });
+    s.addPlayer(player);
+    assertEquals(s.getPlayers().get(0).getName(), "John");
+  }
+
+  /**
+   * test remove player from the space.
+   */
+  @Test
+  public void testRemovePlayer() {
+    Space s = new Space(0, "kitchen", new int[] { 10, 5 }, new int[] { 15, 8 });
+    s.addPlayer(player);
+    assertEquals(s.getPlayers().get(0).getName(), "John");
+    s.removePlayer(player);
+    assertEquals(s.getPlayers().size(), 0);
+  }
+
+
+ 
 }

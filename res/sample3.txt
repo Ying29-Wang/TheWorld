@@ -1,0 +1,8 @@
+40 40 The Dracula's haunted Castle
+200 The Earl Decuras
+2
+5 5 10 8 Throne Room
+8 9 24 23 Grand Ballroom
+2
+0 3 Bloodthirst Blade
+1 2 Vampire's Fang Dagger

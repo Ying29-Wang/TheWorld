@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This class represents a space in the world, defined by its unique ID, name, 
- * upper-left and lower-right coordinates, neighboring spaces, and the items it contains. 
- * This class provides methods to access and manipulate the space's attributes and calculate 
- * its neighbors based on spatial proximity.
+ * This class represents a space in the world, defined by its unique ID, name,
+ * upper-left and lower-right coordinates, neighboring spaces, and the items it
+ * contains. This class provides methods to access and manipulate the space's
+ * attributes and calculate its neighbors based on spatial proximity.
  */
 public class Space implements SpaceInterface {
   private String name;
   private List<SpaceInterface> neighbors;
   private List<ItemInterface> items;
+  private List<Player> players;
   private int id;
   private int[] upleft;
   private int[] downright;
@@ -24,8 +25,10 @@ public class Space implements SpaceInterface {
    * 
    * @param id        the id of the space
    * @param name      the name of the space
-   * @param upleft    an array containing the x and y coordinates of the upper-left corner
-   * @param downright an array containing the x and y coordinates of the lower-right corner
+   * @param upleft    an array containing the x and y coordinates of the
+   *                  upper-left corner
+   * @param downright an array containing the x and y coordinates of the
+   *                  lower-right corner
    * @throws IllegalArgumentException if the coordinates are invalid
    */
   public Space(int id, String name, int[] upleft, int[] downright) throws IllegalArgumentException {
@@ -37,6 +40,7 @@ public class Space implements SpaceInterface {
       this.downright = downright;
       this.neighbors = new ArrayList<>();
       this.items = new ArrayList<>();
+      this.players = new ArrayList<>();
     } else {
       throw new IllegalArgumentException();
     }
@@ -70,7 +74,7 @@ public class Space implements SpaceInterface {
   public void setItem(ItemInterface item) {
     if (item != null) {
       if (this.items.size() > 0) {
-        this.items.remove((Item) item); 
+        this.items.remove((Item) item);
       }
       this.items.add((Item) item);
     }
@@ -96,6 +100,40 @@ public class Space implements SpaceInterface {
    */
   public List<ItemInterface> getItems() {
     return this.items;
+  }
+
+  /**
+   * Retrieves the list of players in the current space.
+   *
+   * @return a list of {@link Player} objects representing the players in the space.
+   */
+  public List<Player> getPlayers() {
+    return this.players;
+  }
+
+  /**
+   * Adds a player to the space. If the player already exists in the space, 
+   * it will be removed first and then re-added.
+   *
+   * @param p the player to be added to the space. If the player is null, 
+   *          the method will not perform any action.
+   */
+  public void addPlayer(Player p) {
+    if (p != null) {
+      this.players.remove(p);
+      this.players.add(p);
+    }
+  }
+
+  /**
+   * Removes the specified player from the list of players if the player is not null.
+   *
+   * @param p the player to be removed
+   */
+  public void removePlayer(Player p) {
+    if (p != null) {
+      this.players.remove(p);
+    }
   }
 
   /**
@@ -132,8 +170,8 @@ public class Space implements SpaceInterface {
   }
 
   /**
-   * Calculates and sets the neighboring spaces. 
-   * If a space is adjacent to this space horizontally or vertically, it is considered a neighbor.
+   * Calculates and sets the neighboring spaces. If a space is adjacent to this
+   * space horizontally or vertically, it is considered a neighbor.
    * 
    * @param spaces the list of all possible spaces to check for adjacency
    */
@@ -149,10 +187,9 @@ public class Space implements SpaceInterface {
     }
   }
 
-
   /**
-   * Returns a string representation of the space, including its ID, name, coordinates, 
-   * the items it contains, and its neighboring spaces.
+   * Returns a string representation of the space, including its ID, name,
+   * coordinates, the items it contains, and its neighboring spaces.
    * 
    * @return a string describing the space
    */
@@ -161,23 +198,22 @@ public class Space implements SpaceInterface {
     StringBuilder basicInfo = new StringBuilder();
 
     // add basic information
-    basicInfo.append(String.format("Space No.%d %s; upleft:%d,%d; downright:%d,%d;\n",
-        this.id, this.name, this.upleft[0], this.upleft[1], this.downright[0], this.downright[1]));
+    basicInfo.append(String.format("Space No.%d %s; upleft:%d,%d; downright:%d,%d;\n", this.id,
+        this.name, this.upleft[0], this.upleft[1], this.downright[0], this.downright[1]));
 
     // add items information
     basicInfo.append(String.format("includes %d items\n", this.items.size()));
     for (ItemInterface itemElement : this.items) {
-      Item item = (Item) itemElement; 
-      basicInfo.append(String.format("- %s, cause %d damage\n", 
-          item.getName(), item.getDamage()));
+      Item item = (Item) itemElement;
+      basicInfo.append(String.format("- %s, cause %d damage\n", item.getName(), item.getDamage()));
     }
 
     // add neighbors information
     basicInfo.append(String.format("it has %d neighbors\n", this.neighbors.size()));
     for (SpaceInterface neighborElement : this.neighbors) {
       Space neighbor = (Space) neighborElement;
-      basicInfo.append(String.format("- Space No.%d %s is a neighbor\n", 
-          neighbor.getId(), neighbor.getName()));
+      basicInfo.append(
+          String.format("- Space No.%d %s is a neighbor\n", neighbor.getId(), neighbor.getName()));
     }
 
     return basicInfo.toString();
@@ -185,7 +221,7 @@ public class Space implements SpaceInterface {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) { 
+    if (this == o) {
       return true;
     }
 
@@ -193,14 +229,13 @@ public class Space implements SpaceInterface {
       return false;
     }
 
-    Space that = (Space) o; 
-    return this.id == that.id 
-        && Objects.equals(this.name, that.name) 
-        && Objects.equals(this.upleft, that.upleft) 
+    Space that = (Space) o;
+    return this.id == that.id && Objects.equals(this.name, that.name)
+        && Objects.equals(this.upleft, that.upleft)
         && Objects.equals(this.downright, that.downright);
-    
+
   }
-  
+
   @Override
   public int hashCode() {
     return Objects.hash(this.id, this.name, this.downright, this.upleft);

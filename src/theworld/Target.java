@@ -43,6 +43,7 @@ public class Target implements CharacterInterface {
     return this.space;
   }
   
+  @Override
   public int getHealth() {
     return this.health;
   }

@@ -22,4 +22,10 @@ public interface CharacterInterface {
    * @return {@link SpaceInterface} 
    */
   SpaceInterface move(SpaceInterface space);
+  
+  /**
+   * Get the health number of the character.
+   * @return the integer number of the character
+   */
+  int getHealth();
 }
