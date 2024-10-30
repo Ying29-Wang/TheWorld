@@ -50,7 +50,7 @@ Driver
 ## Usage
 Running the Game
 To run the game, use the following command in Terminal:
-java -jar TheWorld.jar
+java -jar TheWorld.jar sampleInput.txt 10
 ## Demo
 
 Insert gif or link to demo
