@@ -132,6 +132,7 @@ public class TheWorld implements MapInterface {
    * Adds an item to the world. If the item already exists, it will be replaced.
    * 
    * @param item the item to be added to the world
+   * @return true if add item successfully
    */
   public void addItemToEvidence(ItemInterface item) {
     if (item != null) {
@@ -216,6 +217,18 @@ public class TheWorld implements MapInterface {
   }
 
   /**
+   * 
+   * 
+   * @return evidences
+   */
+  public List<ItemInterface> getEvidences() {
+    if (this.evidences != null) {
+      return this.evidences;
+    }
+    return null;
+  }
+
+  /**
    * Returns next player in the world.
    * 
    * @return the next turn of player
@@ -229,6 +242,12 @@ public class TheWorld implements MapInterface {
     return this.turn;
   }
 
+  /**
+   * Returns a string representation of the world, including its name, target,
+   * spaces, and items.
+   * 
+   * @return a string describing the world
+   */
   @Override
   public String toString() {
     StringBuilder basicInfo = new StringBuilder();

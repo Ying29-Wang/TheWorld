@@ -7,10 +7,8 @@ import theworld.TheWorldFacade;
 
 /**
  * This class represents the look around action of the player by displaying
- * information
- * about where a specific player is in the world including what spaces that can
- * been seen
- * from where they are. This will lead to a turn.
+ * information about where a specific player is in the world including what
+ * spaces that can been seen from where they are. This will lead to a turn.
  */
 public class LookAround implements CommandInterface {
 
@@ -23,13 +21,13 @@ public class LookAround implements CommandInterface {
         out.append(lookingaround);
         twf.nextTurn();
         twf.moveTargetToNext();
-        twf.movePetToNext();
         out.append(String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
             twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
-        out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
-                twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
-
-
+        if (twf.getPet() != null) {
+          twf.movePetToNext();
+          out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
+              twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
+        }
         return true;
       }
       return false;

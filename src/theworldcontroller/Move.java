@@ -9,15 +9,15 @@ import theworld.SpaceInterface;
 import theworld.TheWorldFacade;
 
 /**
- * The Move class implements the CommandInterface and provides functionality
- * for executing a move command within the game. It handles both manual and
+ * The Move class implements the CommandInterface and provides functionality for
+ * executing a move command within the game. It handles both manual and
  * automatic player movements, retrieves available spaces for movement, and
  * manages the transition to the next turn.
  */
 public class Move implements CommandInterface {
 
   @Override
-  public boolean execute(TheWorldFacade twf, Appendable out, Scanner scan) 
+  public boolean execute(TheWorldFacade twf, Appendable out, Scanner scan)
       throws IllegalStateException {
     try {
       Player p = twf.getTurnOfGame();
@@ -29,7 +29,7 @@ public class Move implements CommandInterface {
         handleAutomaticMove(p, sf, twf, out);
       }
       return true;
-    } catch (IOException e) {
+    } catch (Exception e) {
       try {
         out.append("An error occurred: ").append(e.getMessage()).append("\n");
       } catch (IOException ignored) {
@@ -40,10 +40,9 @@ public class Move implements CommandInterface {
   }
 
   /**
-   * Retrieves a list of available spaces for the given player to move into.
-   * If the player is currently in a space, it returns the neighboring spaces of
-   * that space. If the player is not in any space, it returns all spaces in the
-   * world.
+   * Retrieves a list of available spaces for the given player to move into. If
+   * the player is currently in a space, it returns the neighboring spaces of that
+   * space. If the player is not in any space, it returns all spaces in the world.
    *
    * @param p   the player whose available spaces are to be retrieved
    * @param twf the facade providing access to the world and its spaces
@@ -54,11 +53,10 @@ public class Move implements CommandInterface {
   }
 
   /**
-   * Handles the manual move of a player within the game.
-   * This method prompts the player to enter a move, validates the input, and
-   * attempts to move the player to the specified space. If the move is
-   * successful, it proceeds to the next turn. If an error occurs, it prompts the
-   * player to try again.
+   * Handles the manual move of a player within the game. This method prompts the
+   * player to enter a move, validates the input, and attempts to move the player
+   * to the specified space. If the move is successful, it proceeds to the next
+   * turn. If an error occurs, it prompts the player to try again.
    * 
    * @param p    the player who is making the move
    * @param sf   the list of available spaces the player can move to
@@ -67,9 +65,8 @@ public class Move implements CommandInterface {
    * @param scan the scanner object to read input from the player
    * @throws IOException if an I/O error occurs
    */
-  private void handleManualMove(Player p, List<SpaceInterface> sf, 
-      TheWorldFacade twf, Appendable out, Scanner scan)
-      throws IOException {
+  private void handleManualMove(Player p, List<SpaceInterface> sf, TheWorldFacade twf,
+      Appendable out, Scanner scan) throws IOException {
     out.append(String.format("Enter a move for %s to ", p.getName()));
     for (SpaceInterface sp : sf) {
       out.append(String.format("%d. %s ", sp.getId(), sp.getName()));
@@ -81,8 +78,8 @@ public class Move implements CommandInterface {
       if (isValidSpaceId(temp, sf)) {
         try {
           twf.movePlayer(p, Integer.parseInt(temp));
-          out.append(String.format("%s has already moved to %s\n", 
-              p.getName(), p.getSpace().getName()));
+          out.append(
+              String.format("%s has already moved to %s\n", p.getName(), p.getSpace().getName()));
           proceedToNextTurn(twf, out);
           break;
         } catch (IOException e) {
@@ -104,9 +101,8 @@ public class Move implements CommandInterface {
    * @param out the appendable output to log the movement
    * @throws IOException if an I/O error occurs while appending to the output
    */
-  private void handleAutomaticMove(Player p, List<SpaceInterface> sf, 
-      TheWorldFacade twf, Appendable out)
-      throws IOException {
+  private void handleAutomaticMove(Player p, List<SpaceInterface> sf, TheWorldFacade twf,
+      Appendable out) throws IOException {
     int random = (int) (Math.random() * sf.size());
     p.move(sf.get(random));
     out.append(String.format("%s has already moved to %s\n", p.getName(), p.getSpace().getName()));
@@ -114,9 +110,8 @@ public class Move implements CommandInterface {
   }
 
   /**
-   * Checks if the given space ID is valid.
-   * A valid space ID is a string that consists only of digits and exists in the
-   * provided list of space interfaces.
+   * Checks if the given space ID is valid. A valid space ID is a string that
+   * consists only of digits and exists in the provided list of space interfaces.
    *
    * @param temp the space ID to check
    * @param sf   the list of space interfaces to validate against
@@ -139,11 +134,13 @@ public class Move implements CommandInterface {
   private void proceedToNextTurn(TheWorldFacade twf, Appendable out) throws IOException {
     twf.nextTurn();
     twf.moveTargetToNext();
-    twf.movePetToNext();
     out.append(String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
         twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
-    out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
-            twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
+    if (twf.getPet() != null) {
+      twf.movePetToNext();
+      out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
+          twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
+    }
 
   }
 }

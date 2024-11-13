@@ -71,7 +71,7 @@ public class TheWorldFacade {
       it.getSpace().setItem(it);
       this.world.addItem(it);
       return this;
-    } catch (NullPointerException e) {
+    } catch (Exception e) {
 
       return this;
     }
@@ -184,6 +184,15 @@ public class TheWorldFacade {
    */
   public Pet getPet() {
     return this.world.getPet();
+  }
+
+  /**
+   * Retrieves evidences.
+   *
+   * @return evidences list.
+   */
+  public List<ItemInterface> getEvidences() {
+    return this.world.getEvidences();
   }
 
   /**

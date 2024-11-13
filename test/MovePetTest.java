@@ -14,6 +14,7 @@ import theworldcontroller.MovePet;
 
 /**
  * This class contains unit tests for the MovePet class.
+ * It tests the functionality of moving a pet within the game world.
  */
 public class MovePetTest {
 
@@ -24,16 +25,16 @@ public class MovePetTest {
   private Player player;
 
   /**
-   * Sets up the test environment before each test case runs.
+   * Sets up the test environment before each test case is executed.
    * 
-   * @throws Exception if an error occurs during setup.
+   * @throws IOException if an error occurs during setup.
    */
   @Before
   public void setUpBeforeClass() throws IOException {
     mp = new MovePet();
     player = new Player(1, "Player1", 1, false);
     twf = new TheWorldFacade();
-    twf.parseTheWorld(new FileReader("res/sample3.txt"));
+    twf.parseTheWorld(new FileReader("res/sample31.txt"));
 
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(1));

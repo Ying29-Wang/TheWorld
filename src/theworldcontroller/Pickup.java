@@ -52,9 +52,9 @@ public class Pickup implements CommandInterface {
   }
 
   /**
-   * Handles the manual pickup of an item by a player in the game.
-   * This method continuously prompts the player to enter an item number until a
-   * valid item is picked up.
+   * Handles the manual pickup of an item by a player in the game. This method
+   * continuously prompts the player to enter an item number until a valid item is
+   * picked up.
    * 
    * @param p    the player attempting to pick up the item
    * @param twf  the facade providing access to the game's world and items
@@ -62,7 +62,7 @@ public class Pickup implements CommandInterface {
    * @param scan the scanner used to read input from the player
    * @throws IOException if an I/O error occurs while writing to the output
    */
-  private void handleManualPickup(Player p, TheWorldFacade twf, Appendable out, Scanner scan) 
+  private void handleManualPickup(Player p, TheWorldFacade twf, Appendable out, Scanner scan)
       throws IOException {
     while (true) {
       String temp = scan.nextLine();
@@ -83,16 +83,16 @@ public class Pickup implements CommandInterface {
 
   /**
    * Handles the automatic pickup of an item by the player in the current space.
-   * If there are no items in the space, it notifies the player.
-   * Otherwise, it randomly selects an item from the space and has the player pick
-   * it up. After picking up the item, it proceeds to the next turn.
+   * If there are no items in the space, it notifies the player. Otherwise, it
+   * randomly selects an item from the space and has the player pick it up. After
+   * picking up the item, it proceeds to the next turn.
    *
    * @param p   the player who will pick up the item
    * @param twf the facade of the game world
    * @param out the appendable output to write messages to
    * @throws IOException if an I/O error occurs
    */
-  private void handleAutomaticPickup(Player p, TheWorldFacade twf, Appendable out) 
+  private void handleAutomaticPickup(Player p, TheWorldFacade twf, Appendable out)
       throws IOException {
     if (p.getSpace().getItems().isEmpty()) {
       out.append("No item list in the room.\n");
@@ -105,9 +105,9 @@ public class Pickup implements CommandInterface {
   }
 
   /**
-   * Checks if the given item ID is valid for the specified player.
-   * An item ID is considered valid if it is a numeric string and exists in the
-   * list of item IDs available in the player's current space.
+   * Checks if the given item ID is valid for the specified player. An item ID is
+   * considered valid if it is a numeric string and exists in the list of item IDs
+   * available in the player's current space.
    *
    * @param temp the item ID to validate as a string
    * @param p    the player whose current space's items are to be checked
@@ -131,11 +131,13 @@ public class Pickup implements CommandInterface {
   private void proceedToNextTurn(TheWorldFacade twf, Appendable out) throws IOException {
     twf.nextTurn();
     twf.moveTargetToNext();
-    twf.movePetToNext();
     out.append(String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
         twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
-    out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
-            twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
+    if (twf.getPet() != null) {
+      twf.movePetToNext();
+      out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
+          twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
+    }
 
   }
 }

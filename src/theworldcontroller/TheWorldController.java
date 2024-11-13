@@ -17,6 +17,10 @@ public class TheWorldController implements ControllerInterface {
   private int turnLimit;
   private int currentTurn;
 
+  public int getTurn() {
+    return this.currentTurn;
+  }
+
   /**
    * Constructs a TheWorldController object.
    *
@@ -39,6 +43,14 @@ public class TheWorldController implements ControllerInterface {
     this.currentTurn = 0;
   }
 
+  /**
+   * Starts and manages the game flow for TheWorld.
+   *
+   * @param twf           TheWorldFacade instance to interact with the game world.
+   * @param specification The file path to the game specification.
+   * @throws IllegalStateException if there is an issue with the game output or
+   *                               file reading.
+   */
   @Override
   public void playGame(TheWorldFacade twf, String specification) throws IllegalStateException {
     try {
@@ -93,13 +105,15 @@ public class TheWorldController implements ControllerInterface {
               if (twf.getTarget().getHealth() > 0) {
                 twf.nextTurn();
                 twf.moveTargetToNext();
-                twf.movePetToNext();
                 out.append(
                     String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
                         twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
-                out.append(
-                    String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
-                        twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
+                if (twf.getPet() != null) {
+                  twf.movePetToNext();
+                  out.append(
+                      String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
+                          twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
+                }
                 this.currentTurn++;
               }
             }
@@ -241,13 +255,15 @@ public class TheWorldController implements ControllerInterface {
                         if (twf.getTarget().getHealth() != 0) {
                           twf.nextTurn();
                           twf.moveTargetToNext();
-                          twf.movePetToNext();
                           out.append(String.format("%s has already moved to No. %d %s\n",
                               twf.getTarget().getName(), twf.getTarget().getSpace().getId(),
                               twf.getTarget().getSpace().getName()));
-                          out.append(String.format("%s has already moved to No. %d %s\n",
-                              twf.getPet().getName(), twf.getPet().getSpace().getId(),
-                              twf.getPet().getSpace().getName()));
+                          if (twf.getPet() != null) {
+                            twf.movePetToNext();
+                            out.append(String.format("%s has already moved to No. %d %s\n",
+                                twf.getPet().getName(), twf.getPet().getSpace().getId(),
+                                twf.getPet().getSpace().getName()));
+                          }
                           this.currentTurn++;
                         }
                       }

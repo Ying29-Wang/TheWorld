@@ -34,7 +34,7 @@ public class AttemptTest {
     player = new Player(0, "Player1", 2, false);
 
     twf = new TheWorldFacade();
-    twf.parseTheWorld(new FileReader("res/sample3.txt"));
+    twf.parseTheWorld(new FileReader("res/sample31.txt"));
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(1));
     twf.getTurnOfGame();
