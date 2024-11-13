@@ -10,6 +10,9 @@ import theworld.TheWorldFacade;
  */
 public class Driver {
 
+  /**
+   * Default constructor for the Driver class.
+   */
   public Driver() {
   }
 

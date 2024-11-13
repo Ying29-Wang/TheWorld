@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 import java.util.Stack;
-
 import javax.imageio.ImageIO;
 
 /**
@@ -72,7 +71,7 @@ public class TheWorldFacade {
       it.getSpace().setItem(it);
       this.world.addItem(it);
       return this;
-    } catch (Exception e) {
+    } catch (NullPointerException e) {
 
       return this;
     }
@@ -509,7 +508,7 @@ public class TheWorldFacade {
   }
 
   /**
-   * get Item through id
+   * get Item through id.
    * 
    * @param itemId the item that player should pick up
    * @return if item if matched id, else return null;

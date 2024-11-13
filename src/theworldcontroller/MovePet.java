@@ -42,7 +42,14 @@ public class MovePet implements CommandInterface {
           out.append("Wrong input, please re-enter the space number.\n");
         }
       }
-    } catch (Exception e) {
+    } catch (IOException e) {
+      try {
+        out.append("An error occurred: ").append(e.getMessage()).append("\n");
+      } catch (IOException ignored) {
+        return false;
+      }
+      return false;
+    } catch (NullPointerException e) {
       try {
         out.append("An error occurred: ").append(e.getMessage()).append("\n");
       } catch (IOException ignored) {
@@ -51,5 +58,4 @@ public class MovePet implements CommandInterface {
       return false;
     }
   }
-
 }

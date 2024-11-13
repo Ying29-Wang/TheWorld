@@ -29,7 +29,7 @@ public class MovePetTest {
    * @throws Exception if an error occurs during setup.
    */
   @Before
-  public void setUpBeforeClass() throws Exception {
+  public void setUpBeforeClass() throws IOException {
     mp = new MovePet();
     player = new Player(1, "Player1", 1, false);
     twf = new TheWorldFacade();

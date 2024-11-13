@@ -16,7 +16,8 @@
         <file path="/TheWorld/.classpath"/>
         <file path="/TheWorld/.gitignore"/>
         <file path="/TheWorld/.project"/>
-        <file path="/TheWorld/sampleRun.png"/>
+        <file path="/TheWorld/image.png"/>
+        <file path="/TheWorld/image1.png"/>
         <javaElement handleIdentifier="=TheWorld/src"/>
         <javaElement handleIdentifier="=TheWorld/test"/>
     </selectedElements>

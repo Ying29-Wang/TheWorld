@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertTrue;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,14 +29,12 @@ public class AttemptTest {
    * @throws Exception if an error occurs during setup
    */
   @Before
-  public void setUp() throws Exception {
+  public void setUp() throws IOException {
     at = new Attempt();
     player = new Player(0, "Player1", 2, false);
 
     twf = new TheWorldFacade();
-    twf.parseTheWorld(new FileReader(
-        "res/sample3.txt"));
-
+    twf.parseTheWorld(new FileReader("res/sample3.txt"));
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(1));
     twf.getTurnOfGame();

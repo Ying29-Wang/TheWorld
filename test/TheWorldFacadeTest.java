@@ -14,7 +14,6 @@ import theworld.Space;
 import theworld.TheWorld;
 import theworld.TheWorldFacade;
 
-
 /**
  * This test class is designed to verify the functionality of the
  * {@code TheWorldFacade} class. It includes tests for parsing the world from a
@@ -28,7 +27,7 @@ public class TheWorldFacadeTest {
     try {
       TheWorld tw = twf.parseTheWorld(new FileReader("res/sampleInput1.txt"));
       assertEquals(tw.getName().trim(), "Doctor Lucky's Mansion");
-      assertEquals(tw.getPet().getName(),"Fortune the Cat");
+      assertEquals(tw.getPet().getName(), "Fortune the Cat");
       assertEquals(tw.getRow(), 36);
       assertEquals(tw.getColumn(), 30);
       assertEquals(tw.getTarget().getName().trim(), "Doctor Lucky");
