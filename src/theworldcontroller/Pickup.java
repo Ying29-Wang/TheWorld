@@ -67,7 +67,7 @@ public class Pickup implements CommandInterface {
     while (true) {
       String temp = scan.nextLine();
       if (isValidItemId(temp, p)) {
-        boolean result = p.pickup((Item) twf.getItems().get(Integer.parseInt(temp)));
+        boolean result = p.pickup((Item) twf.getItemById(Integer.parseInt(temp)));
         if (result) {
           out.append(String.format("The item has been picked up by %s.\n", p.getName()));
           proceedToNextTurn(twf, out);
@@ -131,7 +131,11 @@ public class Pickup implements CommandInterface {
   private void proceedToNextTurn(TheWorldFacade twf, Appendable out) throws IOException {
     twf.nextTurn();
     twf.moveTargetToNext();
+    twf.movePetToNext();
     out.append(String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
         twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
+    out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
+            twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
+
   }
 }

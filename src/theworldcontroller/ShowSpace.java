@@ -32,6 +32,9 @@ public class ShowSpace implements CommandInterface {
               if (twf.getTarget().getSpace().getId() == Integer.parseInt(temp)) {
                 out.append(String.format("%s is in the space.\n", twf.getTarget().getName()));
               }
+              if (twf.getPet().getSpace().getId() == Integer.parseInt(temp)) {
+                out.append(String.format("The pet %s is in the space.\n", twf.getPet().getName()));
+              }
               return true;
             } catch (IOException e) {
               out.append("Something goes wrong, please try again\n ");

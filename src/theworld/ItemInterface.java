@@ -31,4 +31,12 @@ public interface ItemInterface {
    * @return the damage number
    */
   int getDamage();
+ 
+  /**
+   * Set the item in a given space.
+   * 
+   * @param space give space that to set the item
+   * @throws IllegalArgumentException Illegal space passed in
+   */
+  void setSpace(SpaceInterface space) throws IllegalArgumentException; 
 }

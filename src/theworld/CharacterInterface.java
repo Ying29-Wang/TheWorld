@@ -28,4 +28,11 @@ public interface CharacterInterface {
    * @return the integer number of the character
    */
   int getHealth();
+  
+  /**
+   * set the health number of the character.
+   * @return the integer number of the character
+   */
+  void setHealth(int health);
+  
 }

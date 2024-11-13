@@ -19,6 +19,7 @@ public class Space implements SpaceInterface {
   private int id;
   private int[] upleft;
   private int[] downright;
+  private boolean visible;
 
   /**
    * Constructs a new space with the given ID, name, and coordinates.
@@ -41,6 +42,7 @@ public class Space implements SpaceInterface {
       this.neighbors = new ArrayList<>();
       this.items = new ArrayList<>();
       this.players = new ArrayList<>();
+      this.visible = true;
     } else {
       throw new IllegalArgumentException();
     }
@@ -66,11 +68,17 @@ public class Space implements SpaceInterface {
     return this.downright;
   }
 
-  /**
-   * Add an item to the space. If the item already exists, it will be replaced.
-   * 
-   * @param item to be added to the space
-   */
+  @Override
+  public boolean isVisible() {
+    return this.visible;
+  }
+
+  @Override
+  public void setVisible(boolean visible) {
+    this.visible = visible;
+  }
+
+  @Override
   public void setItem(ItemInterface item) {
     if (item != null) {
       if (this.items.size() > 0) {
@@ -80,12 +88,7 @@ public class Space implements SpaceInterface {
     }
   }
 
-  /**
-   * Removes the specified item from the space.
-   * 
-   * @param item to be removed
-   * @return true if the item was successfully removed
-   */
+  @Override
   public boolean removeItem(ItemInterface item) {
     if (item != null) {
       return this.items.remove((Item) item);
@@ -93,31 +96,17 @@ public class Space implements SpaceInterface {
     return false;
   }
 
-  /**
-   * Retrieves the list of items in the space.
-   * 
-   * @return a list of items in the space
-   */
+  @Override
   public List<ItemInterface> getItems() {
     return this.items;
   }
 
-  /**
-   * Retrieves the list of players in the current space.
-   *
-   * @return a list of {@link Player} objects representing the players in the space.
-   */
+  @Override
   public List<Player> getPlayers() {
     return this.players;
   }
 
-  /**
-   * Adds a player to the space. If the player already exists in the space, 
-   * it will be removed first and then re-added.
-   *
-   * @param p the player to be added to the space. If the player is null, 
-   *          the method will not perform any action.
-   */
+  @Override
   public void addPlayer(Player p) {
     if (p != null) {
       this.players.remove(p);
@@ -125,22 +114,14 @@ public class Space implements SpaceInterface {
     }
   }
 
-  /**
-   * Removes the specified player from the list of players if the player is not null.
-   *
-   * @param p the player to be removed
-   */
+  @Override
   public void removePlayer(Player p) {
     if (p != null) {
       this.players.remove(p);
     }
   }
 
-  /**
-   * Retrieves the list of neighboring spaces.
-   * 
-   * @return a list of the neighbors of the space
-   */
+  @Override
   public List<SpaceInterface> getNeighbors() {
     return this.neighbors;
   }
@@ -169,12 +150,7 @@ public class Space implements SpaceInterface {
     return horizontalAdjacent || verticalAdjacent;
   }
 
-  /**
-   * Calculates and sets the neighboring spaces. If a space is adjacent to this
-   * space horizontally or vertically, it is considered a neighbor.
-   * 
-   * @param spaces the list of all possible spaces to check for adjacency
-   */
+  @Override
   public void calculateNeighbors(List<SpaceInterface> spaces) {
     this.neighbors.clear(); // Clear current neighbors
 
@@ -187,12 +163,6 @@ public class Space implements SpaceInterface {
     }
   }
 
-  /**
-   * Returns a string representation of the space, including its ID, name,
-   * coordinates, the items it contains, and its neighboring spaces.
-   * 
-   * @return a string describing the space
-   */
   @Override
   public String toString() {
     StringBuilder basicInfo = new StringBuilder();
@@ -201,8 +171,11 @@ public class Space implements SpaceInterface {
     basicInfo.append(String.format("Space No.%d %s; upleft:%d,%d; downright:%d,%d;\n", this.id,
         this.name, this.upleft[0], this.upleft[1], this.downright[0], this.downright[1]));
 
+    for (Player p : this.getPlayers()) {
+      basicInfo.append(String.format("Player %s is in the space\n", p.getName()));
+    }
     // add items information
-    basicInfo.append(String.format("includes %d items\n", this.items.size()));
+    basicInfo.append(String.format("this space includes %d items\n", this.items.size()));
     for (ItemInterface itemElement : this.items) {
       Item item = (Item) itemElement;
       basicInfo.append(String.format("- %s, cause %d damage\n", item.getName(), item.getDamage()));

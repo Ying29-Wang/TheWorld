@@ -18,7 +18,7 @@ public class Target implements CharacterInterface {
    * @throws IllegalArgumentException illegal input exception
    */
   public Target(String name, int health) throws IllegalArgumentException {
-    
+
     if ((health > 0) && (!name.equals(null))) {
       this.name = name;
       this.health = health;
@@ -42,10 +42,15 @@ public class Target implements CharacterInterface {
     this.space = (Space) space;
     return this.space;
   }
-  
+
   @Override
   public int getHealth() {
     return this.health;
+  }
+
+  @Override
+  public void setHealth(int health) {
+    this.health = health;
   }
 
   @Override
@@ -53,7 +58,7 @@ public class Target implements CharacterInterface {
     return String.format("%s with %d health, and is staying at room %s", 
         this.name, this.health, this.space.getName());
   }
-  
+
   @Override
   public boolean equals(Object o) {
     if (this == o) { 
@@ -68,9 +73,9 @@ public class Target implements CharacterInterface {
     return this.health == that.health 
         && Objects.equals(this.name, that.name) 
         && Objects.equals(this.space, that.space);
-    
+
   }
-  
+
   @Override
   public int hashCode() {
     return Objects.hash(this.name, this.health, this.space);

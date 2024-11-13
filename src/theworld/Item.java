@@ -50,12 +50,7 @@ public class Item implements ItemInterface {
     return this.damage;
   }
   
-  /**
-   * Set the item in a given space.
-   * 
-   * @param space give space that to set the item
-   * @throws IllegalArgumentException Illegal space passed in
-   */
+  @Override
   public void setSpace(SpaceInterface space) throws IllegalArgumentException {
     if ((space != null) && (space instanceof Space)) {
       this.space = (Space) space;

@@ -1,5 +1,7 @@
 package theworld;
 
+import java.util.List;
+
 /**
  * This interface represents a player in the world game, a player has a name,
  * an ID. Also, it has ability to move to a particular space, pick up or drop
@@ -18,7 +20,6 @@ public interface PlayerInterface {
    * 
    * @return id number of the player
    */
-
   int getId();
 
   /**
@@ -51,6 +52,16 @@ public interface PlayerInterface {
    * @return true if item is successfully dropped, otherwise false
    */
   boolean leaveItemToTheSpace(ItemInterface item);
+  
+  /**
+   * This method represents that remove the item from the player
+   *  and prepare to move item to the evidence list.
+   * 
+   * @param item that the player drops
+   * 
+   */
+  void removeItem(ItemInterface item);
+  
 
   /**
    * The look around activity of the player.
@@ -58,4 +69,25 @@ public interface PlayerInterface {
    * @return provide the result of what the player see
    */
   String lookAround();
+  
+  /**
+   * Retrieves the list of items in the space.
+   * 
+   * @return a list of items in the space
+   */
+  List<ItemInterface> getItems();
+  
+  /**
+   * get the maximum items that the player can carry.
+   * 
+   * @return number of itemLimit
+   */
+  int getItemLimit();
+  
+  /**
+   * check if the player is a robot.
+   * 
+   * @return true if it is a robot, otherwise false
+   */
+  boolean isAutomatic();
 }

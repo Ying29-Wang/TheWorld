@@ -23,8 +23,12 @@ public class LookAround implements CommandInterface {
         out.append(lookingaround);
         twf.nextTurn();
         twf.moveTargetToNext();
+        twf.movePetToNext();
         out.append(String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
             twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
+        out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
+                twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
+
 
         return true;
       }

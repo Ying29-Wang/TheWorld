@@ -1,8 +1,15 @@
 40 40 The Dracula's haunted Castle
-200 The Earl Decuras
-2
-5 5 10 8 Throne Room
-8 9 24 23 Grand Ballroom
-2
-0 3 Bloodthirst Blade
-1 2 Vampire's Fang Dagger
+20 The Earl Decuras
+Fortune the Cat
+5
+7 2 10 4 Crypt
+6 7 7 13 Coffin Chamber
+8 5 9 18 Feeding Hall
+10 5 13 11 Dark Library
+14 11 16 14 Dungeon
+5
+0 10 Bloodthirst Blade
+1 8 Vampire's Fang Dagger
+1 9 witch's mop
+3 15 Unseen knife
+4 16 Iron rope

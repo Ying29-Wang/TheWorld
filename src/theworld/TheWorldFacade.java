@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
+import java.util.Stack;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -21,12 +23,14 @@ import javax.imageio.ImageIO;
 public class TheWorldFacade {
 
   private TheWorld world;
+  private Stack<SpaceInterface> visited;
 
   /**
    * Constructs a new instance of TheWorldFacade. This constructor initializes the
    * facade without any specific configuration.
    */
   public TheWorldFacade() {
+    visited = new Stack<SpaceInterface>();
   }
 
   /**
@@ -68,7 +72,8 @@ public class TheWorldFacade {
       it.getSpace().setItem(it);
       this.world.addItem(it);
       return this;
-    } catch (NullPointerException e) {
+    } catch (Exception e) {
+
       return this;
     }
   }
@@ -116,6 +121,26 @@ public class TheWorldFacade {
   }
 
   /**
+   * Adds a pet to the world.
+   *
+   * @param p the pet to be added
+   * @return true if the pet was successfully added, false otherwise
+   */
+  public boolean addPetToTheWorld(String pet) {
+    return this.world.addPet(new Pet(pet));
+  }
+
+  /**
+   * move an item to the evidences list.
+   *
+   * @param p the pet to be added
+   * 
+   */
+  public void moveItemToEvidences(ItemInterface it) {
+    this.world.addItemToEvidence(it);
+  }
+
+  /**
    * Retrieves the list of players from the world.
    *
    * @return a list of {@link Player} objects representing the players in the
@@ -151,6 +176,15 @@ public class TheWorldFacade {
    */
   public Target getTarget() {
     return this.world.getTarget();
+  }
+
+  /**
+   * Retrieves the pet from the world.
+   *
+   * @return the pet object from the world.
+   */
+  public Pet getPet() {
+    return this.world.getPet();
   }
 
   /**
@@ -297,7 +331,6 @@ public class TheWorldFacade {
     }
     try {
       String firstline;
-      String spaceline;
       String mymap = new String();
       String character = new String();
       int column = 0;
@@ -336,15 +369,26 @@ public class TheWorldFacade {
         }
         addTargetToTheWorld(character.trim(), health);
       }
-      // parse third line to add Spaces into the world
-      String thirdline;
-      if ((thirdline = br.readLine()) != null) {
-        word = thirdline.split("\\s+");
+      // parse the line to add pet into the world
+      String thirdline = br.readLine();
+      String spacesline = null;
+      if ((thirdline != null) && (thirdline.matches("[A-Za-z ]+"))) {
+        addPetToTheWorld(thirdline.trim());
+        spacesline = br.readLine();
+      } else if (thirdline.matches("^[0-9]+$")) {
+        spacesline = thirdline;
+      } else {
+        spacesline = br.readLine();
+      }
+      // parse space line to add Spaces into the world
+      if (spacesline != null) {
+        word = spacesline.split("\\s+");
         if ((!word[0].isEmpty()) && (word[0].matches("\\d+"))) {
           spaceNumber = Integer.parseInt(word[0]);
           // read every line below to create the space in the map
           // System.out.println(spaceNumber);
           for (int i = 0; i < spaceNumber; i++) {
+            String spaceline;
             spaceline = br.readLine().trim();
             int x1 = 0;
             int y1 = 0;
@@ -429,6 +473,23 @@ public class TheWorldFacade {
   }
 
   /**
+   * Move the pet to the specified space by passing space id.
+   * 
+   * @param pet     the specified player
+   * @param spaceId the specified space that the player should move to
+   * @return if the action well taken, then return true else false
+   */
+  public boolean movePet(Pet pet, int spaceId) throws IllegalArgumentException {
+    if (pet != null) {
+      visited.clear();
+      return pet.move(this.world.getSpaces().get(spaceId));
+    } else {
+      throw new IllegalArgumentException(
+          "The input data is wrong, please check and reenter space number and try again.\n");
+    }
+  }
+
+  /**
    * Excute pick up action for a player.
    * 
    * @param player the player who is picking up the item
@@ -448,10 +509,25 @@ public class TheWorldFacade {
   }
 
   /**
+   * get Item through id
+   * 
+   * @param itemId the item that player should pick up
+   * @return if item if matched id, else return null;
+   */
+  public ItemInterface getItemById(int itemId) {
+    for (ItemInterface it : this.getItems()) {
+      if (it.getId() == itemId) {
+        return it;
+      }
+    }
+    return null;
+  }
+
+  /**
    * execute drop off action for a player.
    * 
    * @param player the player that need to do the command
-   * @param item the item that player should drop off to the space
+   * @param item   the item that player should drop off to the space
    * @return if the action well taken, then return true else false
    */
   public boolean dropOffAction(Player player, Item item) throws IllegalArgumentException {
@@ -478,6 +554,17 @@ public class TheWorldFacade {
   }
 
   /**
+   * try to attack the target.
+   *
+   * @param attempt to attack the target
+   *
+   */
+  public boolean attempt(int hurt) {
+    this.getTarget().setHealth(this.getTarget().getHealth() - hurt);
+    return true;
+  }
+
+  /**
    * Moves the target to the next space in the list of spaces.
    */
   public void moveTargetToNext() {
@@ -492,5 +579,54 @@ public class TheWorldFacade {
     }
     this.world.getTarget().move(this.world.getSpaces().get(currentPos + 1));
     return;
+  }
+
+  /**
+   * Moves the Pet to the next space using a depth-first traversing method.
+   */
+  public void movePetToNext() {
+    Pet pet = this.getPet();
+    if (visited.empty()) {
+      if (pet.getSpace() == null) {
+        pet.move(this.getSpaces().get(0));
+        depthTraverse(pet.getSpace(), visited);
+        return;
+      } else {
+        depthTraverse(pet.getSpace(), visited);
+        pet.move(visited.pop());
+        return;
+      }
+    } else {
+      pet.move(visited.pop());
+    }
+  }
+
+  private void depthTraverse(SpaceInterface spac, Stack<SpaceInterface> visited) {
+    if (visited.contains(spac)) {
+      return;
+    } else {
+      visited.push(spac);
+      for (SpaceInterface sp : ((Space) spac).getNeighbors()) {
+        depthTraverse(sp, visited);
+      }
+    }
+  }
+
+  /**
+   * check if the player can be seen by other players.
+   * 
+   * @param p is the player in current turn
+   */
+  public boolean beSeen(Player p) {
+    if (p.getSpace().getPlayers().size() > 1) {
+      return true;
+    } else {
+      for (SpaceInterface sp : p.getSpace().getNeighbors()) {
+        if (((Space) sp).getPlayers().size() > 0) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

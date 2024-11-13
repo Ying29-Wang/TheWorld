@@ -41,7 +41,7 @@ public class MoveTest {
     Player player = new Player(1, "Player1", 1, false);
     twf = new TheWorldFacade();
     twf.parseTheWorld(new FileReader(
-        "/Users/yingwang/eclipse-workspace/Local-TheWorld/TheWorld/res/sampleInput.txt"));
+        "/Users/westz/TheWorld/res/sampleInput.txt"));
 
     twf.addPlayerToTheWorld(player);
     scan = new Scanner("1\n");

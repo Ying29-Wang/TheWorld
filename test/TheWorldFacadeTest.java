@@ -28,6 +28,7 @@ public class TheWorldFacadeTest {
     try {
       TheWorld tw = twf.parseTheWorld(new FileReader("res/sampleInput1.txt"));
       assertEquals(tw.getName().trim(), "Doctor Lucky's Mansion");
+      assertEquals(tw.getPet().getName(),"Fortune the Cat");
       assertEquals(tw.getRow(), 36);
       assertEquals(tw.getColumn(), 30);
       assertEquals(tw.getTarget().getName().trim(), "Doctor Lucky");

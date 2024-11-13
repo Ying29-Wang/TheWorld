@@ -15,9 +15,11 @@ public class TheWorld implements MapInterface {
   private int column;
   private List<SpaceInterface> spaces;
   private List<ItemInterface> items;
+  private List<ItemInterface> evidences;
   private List<Player> players;
   private Player turn;
   private Target target;
+  private Pet pet;
 
   /**
    * Constructs a new world with the specified name, number of rows and columns.
@@ -36,7 +38,9 @@ public class TheWorld implements MapInterface {
       this.spaces = new ArrayList<>();
       this.items = new ArrayList<>();
       this.players = new ArrayList<>();
+      this.evidences = new ArrayList<>();
       this.turn = null;
+      this.pet = null;
     } else {
       throw new IllegalArgumentException();
     }
@@ -71,6 +75,15 @@ public class TheWorld implements MapInterface {
   }
 
   /**
+   * Returns the pet within the world.
+   * 
+   * @return the pet in the world
+   */
+  public Pet getPet() {
+    return this.pet;
+  }
+
+  /**
    * Add a target to the world.
    * 
    * @param target the target to be added to the world
@@ -79,6 +92,20 @@ public class TheWorld implements MapInterface {
   public boolean addTarget(Target target) {
     if (target != null) {
       this.target = target;
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Add a pet to the world.
+   * 
+   * @param pet the pet to be added to the world
+   * @return True if added successfully
+   */
+  public boolean addPet(PetInterface pet) {
+    if (pet != null) {
+      this.pet = (Pet) pet;
       return true;
     }
     return false;
@@ -99,6 +126,18 @@ public class TheWorld implements MapInterface {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Adds an item to the world. If the item already exists, it will be replaced.
+   * 
+   * @param item the item to be added to the world
+   */
+  public void addItemToEvidence(ItemInterface item) {
+    if (item != null) {
+      this.getItems().remove(item);
+      this.evidences.add(item);
+    }
   }
 
   /**
@@ -190,12 +229,6 @@ public class TheWorld implements MapInterface {
     return this.turn;
   }
 
-  /**
-   * Returns a string representation of the world, including its name, target,
-   * spaces, and items.
-   * 
-   * @return a string describing the world
-   */
   @Override
   public String toString() {
     StringBuilder basicInfo = new StringBuilder();

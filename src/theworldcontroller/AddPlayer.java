@@ -28,7 +28,7 @@ public class AddPlayer implements CommandInterface {
         }
       } while (newPerson == null);
 
-      if (twf.addPlayerToTheWorld(new Player(twf.getPlayers().size(), newPerson, 1, isAutomatic))) {
+      if (twf.addPlayerToTheWorld(new Player(twf.getPlayers().size(), newPerson, 5, isAutomatic))) {
         out.append(String.format("New player %s has been added\n", newPerson));
         return true;
       } else {

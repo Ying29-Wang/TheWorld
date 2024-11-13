@@ -18,10 +18,11 @@ public class Player implements PlayerInterface {
   /**
    * Constructor of the Player.
    * 
-   * @param id the player's id number
-   * @param name player's name
-   * @param itemLimit the maximum of items that a player can have
-   * @param isAutomatic represents that if the player is a computer controlled or not
+   * @param id          the player's id number
+   * @param name        player's name
+   * @param itemLimit   the maximum of items that a player can have
+   * @param isAutomatic represents that if the player is a computer controlled or
+   *                    not
    * @throws IllegalArgumentException illegal input exception
    */
   public Player(int id, String name, int itemLimit, boolean isAutomatic)
@@ -42,6 +43,7 @@ public class Player implements PlayerInterface {
     return this.name;
   }
 
+  @Override
   public int getId() {
     return this.id;
   }
@@ -64,29 +66,17 @@ public class Player implements PlayerInterface {
     return false;
   }
 
-  /**
-   * check if the player is a robot.
-   * 
-   * @return true if it is a robot, otherwise false
-   */
+  @Override
   public boolean isAutomatic() {
     return isAutomatic;
   }
 
-  /**
-   * get the maximum items that the player can carry.
-   * 
-   * @return number of itemLimit
-   */
+  @Override
   public int getItemLimit() {
     return itemLimit;
   }
 
-  /**
-   * get the list of items that taken by the player.
-   * 
-   * @return Item List
-   */
+  @Override
   public List<ItemInterface> getItems() {
     return this.items;
   }
@@ -111,13 +101,33 @@ public class Player implements PlayerInterface {
   }
 
   @Override
+  public void removeItem(ItemInterface item) {
+    if (item != null) {
+      this.items.remove(item);
+    }
+    return;
+  }
+
+  @Override
   public String lookAround() {
     StringBuffer sb = new StringBuffer();
     sb.append(String.format("this is the player %s, he/she is in the space No.%d %s\n", this.name,
         this.space.getId(), this.space.getName()));
+    for (Player p : this.space.getPlayers()) {
+      if (p.getId() != this.id) {
+        sb.append(String.format("Player %s is also in the space\n", p.getName()));
+      }
+    }
+    for (ItemInterface it : this.space.getItems()) {
+      sb.append(String.format("Item %s is in the space\n", it.getName()));
+    }
     for (SpaceInterface s : this.space.getNeighbors()) {
-      sb.append("now he/she is watching the space:\n");
-      sb.append(((Space) s).toString());
+      if (!s.isVisible()) {
+        sb.append(String.format("The neighbor space %s is invisible\n", s.getName()));
+      } else {
+        sb.append("now he/she is watching the space:\n");
+        sb.append(((Space) s).toString());
+      }
     }
     return sb.toString();
   }
@@ -125,15 +135,20 @@ public class Player implements PlayerInterface {
   @Override
   public String toString() {
     StringBuffer sb = new StringBuffer();
-    sb.append(String.format("this is the player %s, he/she is in the space No.%d %s\n", this.name,
-        this.space.getId(), this.space.getName()));
-    for (ItemInterface i : this.items) {
-      sb.append(String.format("he/she is carrying the item No.%d %s\n", ((Item) i).getId(),
-          ((Item) i).getName()));
+    if (this.getSpace() != null) {
+      sb.append(String.format("this is the player %s, he/she is in the space No.%d %s\n", this.name,
+          this.space.getId(), this.space.getName()));
+      for (ItemInterface i : this.items) {
+        sb.append(String.format("he/she is carrying the item No.%d %s\n", ((Item) i).getId(),
+            ((Item) i).getName()));
+      }
+    } else {
+      sb.append(String.format("this is the player %s, he/she is not in any space right now.\n",
+          this.name));
     }
     return sb.toString();
   }
-  
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -145,8 +160,7 @@ public class Player implements PlayerInterface {
     }
 
     Player that = (Player) o;
-    return this.id == that.id
-        && Objects.equals(this.name, that.name)
+    return this.id == that.id && Objects.equals(this.name, that.name)
         && Objects.equals(this.itemLimit, that.itemLimit)
         && Objects.equals(this.isAutomatic, that.isAutomatic);
 
@@ -157,4 +171,3 @@ public class Player implements PlayerInterface {
     return Objects.hash(this.id, this.name, this.itemLimit, this.isAutomatic);
   }
 }
-

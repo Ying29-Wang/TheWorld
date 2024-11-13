@@ -139,7 +139,11 @@ public class Move implements CommandInterface {
   private void proceedToNextTurn(TheWorldFacade twf, Appendable out) throws IOException {
     twf.nextTurn();
     twf.moveTargetToNext();
+    twf.movePetToNext();
     out.append(String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
         twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
+    out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
+            twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
+
   }
 }
