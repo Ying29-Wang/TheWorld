@@ -71,7 +71,7 @@ public class TheWorldFacade {
       it.getSpace().setItem(it);
       this.world.addItem(it);
       return this;
-    } catch (Exception e) {
+    } catch (NullPointerException e) {
 
       return this;
     }
