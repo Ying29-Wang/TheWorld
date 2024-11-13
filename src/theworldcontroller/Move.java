@@ -29,7 +29,14 @@ public class Move implements CommandInterface {
         handleAutomaticMove(p, sf, twf, out);
       }
       return true;
-    } catch (Exception e) {
+    } catch (IOException e) {
+      try {
+        out.append("An error occurred: ").append(e.getMessage()).append("\n");
+      } catch (IOException ignored) {
+        return false;
+      }
+      return false;
+    } catch (NullPointerException e) {
       try {
         out.append("An error occurred: ").append(e.getMessage()).append("\n");
       } catch (IOException ignored) {

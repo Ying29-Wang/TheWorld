@@ -17,9 +17,6 @@ public class TheWorldController implements ControllerInterface {
   private int turnLimit;
   private int currentTurn;
 
-  public int getTurn() {
-    return this.currentTurn;
-  }
 
   /**
    * Constructs a TheWorldController object.
@@ -41,6 +38,11 @@ public class TheWorldController implements ControllerInterface {
     scan = new Scanner(in);
     this.turnLimit = turnLimit;
     this.currentTurn = 0;
+  }
+
+  @Override
+  public int getTurn() {
+    return this.currentTurn;
   }
 
   /**

@@ -10,6 +10,10 @@ import theworld.TheWorldFacade;
  * TheWorldFacade instance and manage the game based on the given specification
  * file.
  */
+/**
+ * The ControllerInterface defines the contract for a controller that manages
+ * the game flow and interactions with the game world.
+ */
 public interface ControllerInterface {
 
   /**
@@ -22,4 +26,11 @@ public interface ControllerInterface {
    *                               state
    */
   void playGame(TheWorldFacade twf, String specification) throws IllegalStateException;
+
+
+  /**
+   * Returns the current turn of the game.
+   * @return the current turn of the game。
+   */
+  public int getTurn()；
 }

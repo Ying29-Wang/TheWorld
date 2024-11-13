@@ -217,9 +217,10 @@ public class TheWorld implements MapInterface {
   }
 
   /**
-   * 
-   * 
-   * @return evidences
+   * Retrieves the list of evidences.
+   *
+   * @return a list of ItemInterface objects representing the evidences if they exist,
+   *         otherwise returns null.
    */
   public List<ItemInterface> getEvidences() {
     if (this.evidences != null) {

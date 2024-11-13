@@ -7,8 +7,8 @@ import theworld.SpaceInterface;
 import theworld.TheWorldFacade;
 
 /**
- * The MovePet class implements the CommandInterface and provides the functionality
- * to move a pet to a different space in the game world.
+ * The MovePet class implements the CommandInterface and provides the
+ * functionality to move a pet to a different space in the game world.
  */
 public class MovePet implements CommandInterface {
 
@@ -42,7 +42,14 @@ public class MovePet implements CommandInterface {
           out.append("Wrong input, please re-enter the space number.\n");
         }
       }
-    } catch (Exception e) {
+    } catch (IOException e) {
+      try {
+        out.append("An error occurred: ").append(e.getMessage()).append("\n");
+      } catch (IOException ignored) {
+        return false;
+      }
+      return false;
+    } catch (NullPointerException e) {
       try {
         out.append("An error occurred: ").append(e.getMessage()).append("\n");
       } catch (IOException ignored) {
