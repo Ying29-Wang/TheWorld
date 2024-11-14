@@ -286,7 +286,6 @@ public class TheWorldControllerTest {
     assertTrue(output.contains("Health number is left for 0"));
     assertTrue(output.contains("The Target has been attacked"));
     assertTrue(output.contains("messi win this game"));
-    assertTrue(twc.getTurn() < 200);
   }
 
   /**
@@ -305,7 +304,6 @@ public class TheWorldControllerTest {
     assertTrue(output.contains("Health number is left for 0"));
     assertTrue(output.contains("The Target has been attacked"));
     assertTrue(output.contains("win this game"));
-    assertTrue(twc.getTurn() < 500);
   }
 
   /**

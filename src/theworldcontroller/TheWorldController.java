@@ -40,11 +40,6 @@ public class TheWorldController implements ControllerInterface {
     this.currentTurn = 0;
   }
 
-  @Override
-  public int getTurn() {
-    return this.currentTurn;
-  }
-
   /**
    * Starts and manages the game flow for TheWorld.
    *

@@ -26,11 +26,4 @@ public interface ControllerInterface {
    *                               state
    */
   void playGame(TheWorldFacade twf, String specification) throws IllegalStateException;
-
-
-  /**
-   * Returns the current turn of the game.
-   * @return the current turn of the game。
-   */
-  public int getTurn()；
 }
