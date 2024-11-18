@@ -311,7 +311,7 @@ public class TheWorldControllerTest {
    * neighbor space attack false.
    */
   @Test
-  public void test2PlayerAndKillTheTarget() {
+  public void test2PlayerAndAttackTheTarget() {
 
     StringReader sri = new StringReader("n\nmessi\ny\nn\nmac\nn\n0\n2\n1\n3\n10\nq\n");
     TheWorldFacade twf = new TheWorldFacade();

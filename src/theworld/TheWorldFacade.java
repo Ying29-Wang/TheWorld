@@ -609,6 +609,12 @@ public class TheWorldFacade {
     }
   }
 
+  /**
+   * Performs a depth-first traversal on the given space.
+   *
+   * @param spac the starting space for the traversal
+   * @param visited a stack to keep track of visited spaces
+   */
   private void depthTraverse(SpaceInterface spac, Stack<SpaceInterface> visited) {
     if (visited.contains(spac)) {
       return;
@@ -628,6 +634,8 @@ public class TheWorldFacade {
   public boolean beSeen(Player p) {
     if (p.getSpace().getPlayers().size() > 1) {
       return true;
+    } else if (!p.getSpace().isVisible()) {
+      return false;
     } else {
       for (SpaceInterface sp : p.getSpace().getNeighbors()) {
         if (((Space) sp).getPlayers().size() > 0) {

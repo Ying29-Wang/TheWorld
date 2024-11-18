@@ -1,5 +1,5 @@
 40 40 The Dracula's haunted Castle
-200 The Earl Decuras
+5 The Earl Decuras
 Fortune the Cat
 22
 2 4 10 8 Throne Room

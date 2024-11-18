@@ -56,39 +56,22 @@ public class TheWorld implements MapInterface {
     return this.row;
   }
 
-  /**
-   * Returns the name of the world.
-   * 
-   * @return the name of the world
-   */
+  @Override
   public String getName() {
     return this.name;
   }
 
-  /**
-   * Returns the target within the world.
-   * 
-   * @return the target in the world
-   */
+  @Override
   public Target getTarget() {
     return this.target;
   }
 
-  /**
-   * Returns the pet within the world.
-   * 
-   * @return the pet in the world
-   */
+  @Override
   public Pet getPet() {
     return this.pet;
   }
 
-  /**
-   * Add a target to the world.
-   * 
-   * @param target the target to be added to the world
-   * @return True if added successfully
-   */
+  @Override
   public boolean addTarget(Target target) {
     if (target != null) {
       this.target = target;
@@ -97,12 +80,7 @@ public class TheWorld implements MapInterface {
     return false;
   }
 
-  /**
-   * Add a pet to the world.
-   * 
-   * @param pet the pet to be added to the world
-   * @return True if added successfully
-   */
+  @Override
   public boolean addPet(PetInterface pet) {
     if (pet != null) {
       this.pet = (Pet) pet;
@@ -111,12 +89,7 @@ public class TheWorld implements MapInterface {
     return false;
   }
 
-  /**
-   * Adds an item to the world. If the item already exists, it will be replaced.
-   * 
-   * @param item the item to be added to the world
-   * @return true if add item successfully
-   */
+  @Override
   public boolean addItem(ItemInterface item) {
     if (item != null) {
       if (this.items.contains(item)) {
@@ -128,12 +101,7 @@ public class TheWorld implements MapInterface {
     return false;
   }
 
-  /**
-   * Adds an item to the world. If the item already exists, it will be replaced.
-   * 
-   * @param item the item to be added to the world
-   * @return true if add item successfully
-   */
+  @Override
   public void addItemToEvidence(ItemInterface item) {
     if (item != null) {
       this.getItems().remove(item);
@@ -141,13 +109,7 @@ public class TheWorld implements MapInterface {
     }
   }
 
-  /**
-   * Adds a space to the world and calculates its neighbors based on the existing
-   * spaces.
-   * 
-   * @param space the space to be added to the world
-   * @return true if add space successfully
-   */
+  @Override
   public boolean addSpace(SpaceInterface space) {
     if (space != null) {
       if (this.getSpaces().size() > 0) {
@@ -160,41 +122,22 @@ public class TheWorld implements MapInterface {
     return false;
   }
 
-  /**
-   * Returns a list of all items in the world.
-   * 
-   * @return the list of items
-   */
+  @Override
   public List<ItemInterface> getItems() {
     return this.items;
   }
 
-  /**
-   * Returns a list of all spaces in the world.
-   * 
-   * @return the list of spaces
-   */
   @Override
   public List<SpaceInterface> getSpaces() {
     return this.spaces;
   }
 
-  /**
-   * Returns a list of all players in the world.
-   * 
-   * @return the list of players
-   */
+  @Override
   public List<Player> getPlayers() {
     return this.players;
   }
 
-  /**
-   * Adds a player to the list of players if the player is not null.
-   *
-   * @param p the player to be added
-   * @return true if the player was successfully added, false if the player is
-   *         null
-   */
+  @Override
   public boolean addPlayer(Player p) {
     if (p != null) {
       this.players.add(p);
@@ -203,11 +146,7 @@ public class TheWorld implements MapInterface {
     return false;
   }
 
-  /**
-   * Returns current player in the world.
-   * 
-   * @return the current turn of player
-   */
+  @Override
   public Player getTurn() {
     if (this.turn == null) {
       this.turn = this.players.get(0);
@@ -216,12 +155,7 @@ public class TheWorld implements MapInterface {
     return this.turn;
   }
 
-  /**
-   * Retrieves the list of evidences.
-   *
-   * @return a list of ItemInterface objects representing the evidences if they exist,
-   *         otherwise returns null.
-   */
+  @Override
   public List<ItemInterface> getEvidences() {
     if (this.evidences != null) {
       return this.evidences;
@@ -229,11 +163,7 @@ public class TheWorld implements MapInterface {
     return null;
   }
 
-  /**
-   * Returns next player in the world.
-   * 
-   * @return the next turn of player
-   */
+  @Override
   public Player nextTurn() {
     if (this.players.get(this.players.size() - 1).getId() == this.turn.getId()) {
       this.turn = this.players.get(0);
@@ -243,12 +173,6 @@ public class TheWorld implements MapInterface {
     return this.turn;
   }
 
-  /**
-   * Returns a string representation of the world, including its name, target,
-   * spaces, and items.
-   * 
-   * @return a string describing the world
-   */
   @Override
   public String toString() {
     StringBuilder basicInfo = new StringBuilder();
