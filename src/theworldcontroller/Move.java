@@ -56,7 +56,9 @@ public class Move implements CommandInterface {
    * @return a list of available spaces for the player
    */
   private List<SpaceInterface> getAvailableSpaces(Player p, TheWorldFacade twf) {
-    return (p.getSpace() != null) ? p.getSpace().getNeighbors() : twf.getSpaces();
+    return (p.getSpace() != null) 
+        ? p.getSpace().getNeighbors().stream().filter(space -> space.isVisible())
+        .collect(Collectors.toList()) : twf.getSpaces();
   }
 
   /**
