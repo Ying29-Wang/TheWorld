@@ -18,14 +18,13 @@ public class Driver {
   }
 
   /**
-   * The main method that drives the application. It takes command-line arguments
-   * to specify the input specification file, the output sample file for character
-   * movements, and the output map file for the visual representation of the
-   * world.
-   * 
-   * @param args the command-line arguments
-   * 
-   * @throws IOException 
+   * The main method serves as the entry point for the application.
+   * It initializes the viewer and adapter, and starts a new game based on the provided arguments.
+   *
+   * @param args Command line arguments where:
+   *             args[0] is the specification file path,
+   *             args[1] is the game level (must be a positive integer).
+   * @throws IOException if the specification file cannot be found.
    */
   public static void main(String[] args) {
     IView viewer = new Viewer();   

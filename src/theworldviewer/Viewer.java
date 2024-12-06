@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -66,7 +68,9 @@ public class Viewer implements IView {
     frame = new JFrame("Kill the doctor!!!");
     frame.setSize(1800, 1600);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setLayout(new BorderLayout());
+    frame.setLayout(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.fill = GridBagConstraints.BOTH; // fill every single grid
     
     // outputPanel
     outputArea = new JTextArea();
@@ -75,7 +79,11 @@ public class Viewer implements IView {
     outputPanel.setPreferredSize(new Dimension(1200, 500));
     outputPanel.setFocusable(false);
     outputArea.setFocusable(false); 
-    frame.add(outputPanel, BorderLayout.WEST);
+    gbc.gridx = 0; 
+    gbc.gridy = 0; 
+    gbc.weightx = 2.0; 
+    gbc.weighty = 1.0; 
+    frame.add(outputPanel, gbc);
 
     // infoPanel
     infoArea = new JTextArea();
@@ -84,7 +92,9 @@ public class Viewer implements IView {
     infoPanel.setPreferredSize(new Dimension(600, 500));
     infoPanel.setFocusable(false);
     infoArea.setFocusable(false); 
-    frame.add(infoPanel, BorderLayout.EAST);
+    gbc.gridx = 1; 
+    gbc.weightx = 3.0; 
+    frame.add(infoPanel, gbc);
 
     // worldPanel
     panel = new JPanel();
@@ -95,8 +105,12 @@ public class Viewer implements IView {
     worldPanel.setPreferredSize(new Dimension(frame.getWidth(), 800));
     worldPanel.setFocusable(false);
     panel.setFocusable(false);
-    
-    frame.add(worldPanel, BorderLayout.SOUTH);
+    gbc.gridx = 0; 
+    gbc.gridy = 1;
+    gbc.gridwidth = 2; 
+    gbc.weightx = 1.0; 
+    gbc.weighty = 2.0; 
+    frame.add(worldPanel, gbc);
     frame.addKeyListener(this);
     // menu bar
     menu = new JMenuBar();
@@ -288,10 +302,11 @@ public class Viewer implements IView {
   public void setOutputPanel(String s) {
     this.outputArea.append(s);
     //this.outputArea.append("\n");
+    this.outputArea.setCaretPosition(outputArea.getDocument().getLength());
+    /*JScrollBar verticalBar = this.outputPanel.getVerticalScrollBar();
+    verticalBar.setValue(verticalBar.getMaximum());*/
     this.outputPanel.revalidate();
     this.outputPanel.repaint();
-    JScrollBar verticalBar = this.outputPanel.getVerticalScrollBar();
-    verticalBar.setValue(verticalBar.getMaximum());
   }
 
   @Override

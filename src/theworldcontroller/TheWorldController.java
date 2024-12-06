@@ -3,12 +3,8 @@ package theworldcontroller;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PipedInputStream;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
-import org.junit.runner.notification.RunListener.ThreadSafe;
-
 import theworld.TheWorldFacade;
 
 /**
@@ -67,7 +63,8 @@ public class TheWorldController implements ControllerInterface {
   public void playGame(TheWorldFacade twf, String specification) throws IllegalStateException {
     gameContinue = true;
     try {
-      adapter.setOutput("Welcome! The game is start\n");
+      adapter.setOutput("Welcome! The game is start \n");
+      adapter.setOutput("This Game was created by Ying Wang\n");
       adapter.setOutput("------------------------------------------------------------\n");
       FileReader fr = new FileReader(specification);
       twf.parseTheWorld(fr);

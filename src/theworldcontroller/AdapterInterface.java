@@ -77,7 +77,7 @@ public interface AdapterInterface {
   boolean getMovable();
   
   /**
-   * pass result message to the viewer
+   * pass result message to the viewer.
    *
    */
   void showResult(String s);

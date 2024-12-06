@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Scanner;
-
 import theworld.TheWorldFacade;
 import theworldviewer.IView;
 
@@ -33,12 +32,11 @@ public class IOAdapter implements AdapterInterface {
    * @param viewer the IView instance to be associated with this IOAdapter
    * @throws IllegalArgumentException if the viewer is null
    */
-  public IOAdapter(IView viewer) throws IllegalArgumentException{
+  public IOAdapter(IView viewer) throws IllegalArgumentException {
     if (viewer != null) {
       this.viewer = viewer;
       this.restart = false;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException();
     }
   }
@@ -149,11 +147,10 @@ public class IOAdapter implements AdapterInterface {
 
   /**
    * Clears all panels in the viewer.
-   * 
    * This method clears the information panel, output panel, and world panel
    * in the viewer. It returns true upon successful completion.
    * 
-   * @return true if all panels are successfully cleared
+   * @return true if all panels are successfully cleared.
    */
   private boolean clearAll() {
     
