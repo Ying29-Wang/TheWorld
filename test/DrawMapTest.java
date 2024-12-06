@@ -6,6 +6,7 @@ import java.util.Scanner;
 import org.junit.Before;
 import org.junit.Test;
 import theworld.TheWorldFacade;
+import theworldcontroller.AdapterInterface;
 import theworldcontroller.DrawMap;
 
 /**
@@ -15,7 +16,7 @@ public class DrawMapTest {
 
   private DrawMap drawMap;
   private TestTheWorldFacade twf;
-  private Appendable out;
+  private MockAdapter adapter;
   private Scanner scan;
 
   /**
@@ -26,54 +27,63 @@ public class DrawMapTest {
   public void setUp() {
     drawMap = new DrawMap();
     twf = new TestTheWorldFacade();
-    out = new StringBuilder();
+    
   }
 
   @Test
   public void testExecuteValidPngFile() throws IOException {
     scan = new Scanner("validfile.png\n");
-    boolean result = drawMap.execute(twf, out, scan);
+    adapter = new MockAdapter(new StringBuffer());
+    boolean result = drawMap.execute(twf, adapter, scan);
     assertTrue(result);
     assertTrue(twf.isDrawn());
-    assertTrue(out.toString().contains("The map has been stored to the file validfile.png"));
+    assertTrue(adapter.getOutput().contains("The map has been stored to the file validfile.png"));
   }
 
   @Test
   public void testExecuteInvalidFileExtension() throws IOException {
     scan = new Scanner("invalidfile.txt\nvalidfile.png\n");
-    boolean result = drawMap.execute(twf, out, scan);
+    adapter = new MockAdapter(new StringBuffer());
+    
+    boolean result = drawMap.execute(twf, adapter, scan);
     assertTrue(result);
     assertTrue(twf.isDrawn());
-    assertTrue(out.toString().contains("File must be a png, must end with .png"));
-    assertTrue(out.toString().contains("The map has been stored to the file validfile.png"));
+    assertTrue(adapter.getOutput().contains("File must be a png, must end with .png"));
+    assertTrue(adapter.getOutput().contains("The map has been stored to the file validfile.png"));
   }
 
   @Test
   public void testExecuteIoException() throws IOException {
     scan = new Scanner("validfile.png\n");
+    adapter = new MockAdapter(new StringBuffer());
+    
     twf.setThrowIoException(true);
-    boolean result = drawMap.execute(twf, out, scan);
+    boolean result = drawMap.execute(twf, adapter, scan);
     assertFalse(result);
   }
 
   @Test
   public void testExecuteEmptyFileName() throws IOException {
     scan = new Scanner("\nvalidfile.png\n");
-    boolean result = drawMap.execute(twf, out, scan);
+    adapter = new MockAdapter(new StringBuffer());
+    
+    boolean result = drawMap.execute(twf, adapter, scan);
     assertTrue(result);
     assertTrue(twf.isDrawn());
-    assertTrue(out.toString().contains("File must be a png, must end with .png"));
-    assertTrue(out.toString().contains("The map has been stored to the file validfile.png"));
+    assertTrue(adapter.getOutput().contains("File must be a png, must end with .png"));
+    assertTrue(adapter.getOutput().contains("The map has been stored to the file validfile.png"));
   }
 
   @Test
   public void testExecuteNullFileName() throws IOException {
     scan = new Scanner("null\nvalidfile.png\n");
-    boolean result = drawMap.execute(twf, out, scan);
+    adapter = new MockAdapter(new StringBuffer());
+    
+    boolean result = drawMap.execute(twf, adapter, scan);
     assertTrue(result);
     assertTrue(twf.isDrawn());
-    assertTrue(out.toString().contains("File must be a png, must end with .png"));
-    assertTrue(out.toString().contains("The map has been stored to the file validfile.png"));
+    assertTrue(adapter.getOutput().contains("File must be a png, must end with .png"));
+    assertTrue(adapter.getOutput().contains("The map has been stored to the file validfile.png"));
   }
 
   private class TestTheWorldFacade extends TheWorldFacade {

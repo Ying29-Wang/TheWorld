@@ -8,7 +8,9 @@ import org.junit.Test;
 import theworld.Item;
 import theworld.Player;
 import theworld.TheWorldFacade;
+import theworldcontroller.AdapterInterface;
 import theworldcontroller.Attempt;
+import theworldcontroller.IOAdapter;
 
 
 /**
@@ -19,13 +21,14 @@ import theworldcontroller.Attempt;
 public class AttemptTest {
   private Attempt at;
   private TheWorldFacade twf;
-  private Appendable out;
+  private AdapterInterface adapter;
   private Scanner scan;
   private Player player;
+  private Appendable out;
 
   /**
-   * Sets up the test environment before each test.
-   * 
+   * Sets up the test environment before each 
+
    * @throws Exception if an error occurs during setup
    */
   @Before
@@ -39,6 +42,8 @@ public class AttemptTest {
     player.move(twf.getSpaces().get(1));
     twf.getTurnOfGame();
     out = new StringBuilder();
+    adapter = new MockAdapter(out);
+    
   }
 
   /**
@@ -47,7 +52,7 @@ public class AttemptTest {
   @Test
   public void testExecuteByNothing() {
     scan = new Scanner("");
-    boolean result = at.execute(twf, out, scan);
+    boolean result = at.execute(twf, adapter, scan);
     assertTrue(result);
     assertTrue(out.toString().contains("him in the eye and hurt 1"));
   }
@@ -59,7 +64,7 @@ public class AttemptTest {
   public void testExecuteByItem() {
     player.pickup(new Item(0, "Bloodthirst Blade", 10));
     scan = new Scanner("0\n");
-    boolean result = at.execute(twf, out, scan);
+    boolean result = at.execute(twf, adapter, scan);
     assertTrue(result);
     assertTrue(out.toString().contains("attacked by Bloodthirst Blade and cause 10 hurt"));
   }
@@ -73,7 +78,7 @@ public class AttemptTest {
     player.pickup(new Item(1, "Vampire's Fang Dagger", 8));
     System.out.println(player.getItems().get(0).getName());
     scan = new Scanner("1\n");
-    boolean result = at.execute(twf, out, scan);
+    boolean result = at.execute(twf, adapter, scan);
     assertTrue(result);
     assertTrue(out.toString().contains("attacked by Vampire's Fang Dagger and cause 8 hurt"));
   }
@@ -86,7 +91,7 @@ public class AttemptTest {
     player.pickup(new Item(0, "Bloodthirst Blade", 10));
     player.pickup(new Item(1, "Vampire's Fang Dagger", 8));
     scan = new Scanner("2\n1\n");
-    boolean result = at.execute(twf, out, scan);
+    boolean result = at.execute(twf, adapter, scan);
     assertTrue(result);
     assertTrue(out.toString().contains("Wrong input, please re-enter the item number."));
     assertTrue(out.toString().contains("attacked by Vampire's Fang Dagger and cause 8 hurt"));
@@ -99,7 +104,7 @@ public class AttemptTest {
   @Test
   public void testExecuteByRobotWithoutItem() {
     Player robot = new Player(1, "Player2", 2, true);
-    boolean result = at.execute(twf, out, scan);
+    boolean result = at.execute(twf, adapter, scan);
     assertTrue(result);
     assertTrue(out.toString().contains("him in the eye and hurt 1"));
   }

@@ -18,7 +18,7 @@ public class ShowPlayerTest {
 
   private ShowPlayer showPlayer;
   private TheWorldFacade twf;
-  private Appendable out;
+  private MockAdapter out;
   private Scanner scan;
 
   /**
@@ -43,12 +43,12 @@ public class ShowPlayerTest {
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(0));
     scan = new Scanner("0\n");
-    out = new StringBuilder();
+    out = new MockAdapter(new StringBuilder());
     boolean result = showPlayer.execute(twf, out, scan);
     assertTrue(result);
-    assertTrue(out.toString().contains("Please pick a player to show description"));
-    assertTrue(out.toString().contains("0. Player1"));
-    assertTrue(out.toString().contains(player.toString()));
+    assertTrue(out.getOutput().contains("Please pick a player to show description"));
+    assertTrue(out.getOutput().contains("0. Player1"));
+    assertTrue(out.getOutput().contains(player.toString()));
   }
 
   @Test
@@ -61,15 +61,15 @@ public class ShowPlayerTest {
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(0));
     scan = new Scanner("2\n0\n");
-    out = new StringBuilder();
+    out = new MockAdapter(new StringBuilder());
 
     boolean result = showPlayer.execute(twf, out, scan);
     scan.close();
     assertTrue(result);
-    assertTrue(out.toString().contains("Please pick a player to show description"));
-    assertTrue(out.toString().contains("0. Player1"));
-    assertTrue(out.toString().contains("Wrong input, please re-enter the space number."));
-    // assertTrue(out.toString().contains(player1.toString()));
+    assertTrue(out.getOutput().contains("Please pick a player to show description"));
+    assertTrue(out.getOutput().contains("0. Player1"));
+    assertTrue(out.getOutput().contains("Wrong input, please re-enter the space number."));
+    // assertTrue(out.getOutput().contains(player1.toString()));
   }
 
   @Test
@@ -78,10 +78,10 @@ public class ShowPlayerTest {
     twf.parseTheWorld(new FileReader(
         "/Users/yingwang/eclipse-workspace/Local-TheWorld/TheWorld/res/sampleInput.txt"));
     scan = new Scanner("");
-    out = new StringBuilder();
+    out = new MockAdapter(new StringBuilder());
     boolean result = showPlayer.execute(twf, out, scan);
     assertTrue(!result);
-    assertTrue(out.toString().contains("There is not enough players in the game."));
+    assertTrue(out.getOutput().contains("There is not enough players in the game."));
   }
 
   @Test
@@ -89,7 +89,7 @@ public class ShowPlayerTest {
     twf = new TheWorldFacade();
     twf.parseTheWorld(new FileReader(
         "/Users/yingwang/eclipse-workspace/Local-TheWorld/TheWorld/res/sampleInput.txt"));
-    scan = new Scanner("1\n");
+    scan = new Scanner("1\n0\n");
     Player player = new Player(0, "Player1", 1, false);
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(0));
@@ -109,9 +109,10 @@ public class ShowPlayerTest {
         throw new IOException();
       }
     };
-
-    boolean result = showPlayer.execute(twf, outWithIoException, scan);
-    assertFalse(result);
+    out = new MockAdapter(outWithIoException); 
+    boolean result = showPlayer.execute(twf, out, scan);
+    assertTrue(result);
+    
   }
 
   @Test
@@ -123,11 +124,11 @@ public class ShowPlayerTest {
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(0));
     scan = new Scanner("abc\n0\n");
-    out = new StringBuilder();
+    out = new MockAdapter(new StringBuilder());
     boolean result = showPlayer.execute(twf, out, scan);
     scan.close();
     assertTrue(result);
-    assertTrue(out.toString().contains("Wrong input, please re-enter the space number."));
-    assertTrue(out.toString().contains(player.toString()));
+    assertTrue(out.getOutput().contains("Wrong input, please re-enter the space number."));
+    assertTrue(out.getOutput().contains(player.toString()));
   }
 }

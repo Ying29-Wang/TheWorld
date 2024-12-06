@@ -20,7 +20,7 @@ public class MoveTest {
 
   private Move move;
   private TheWorldFacade twf;
-  private Appendable out;
+  private MockAdapter out;
   private Scanner scan;
 
   /**
@@ -32,7 +32,7 @@ public class MoveTest {
   @Before
   public void setUp() throws FileNotFoundException {
     move = new Move();
-    out = new StringBuilder();
+    out = new MockAdapter(new StringBuffer());
 
   }
 
@@ -41,14 +41,14 @@ public class MoveTest {
     Player player = new Player(1, "Player1", 1, false);
     twf = new TheWorldFacade();
     twf.parseTheWorld(new FileReader(
-        "/Users/westz/TheWorld/res/sampleInput.txt"));
+        "res/sampleInput.txt"));
 
     twf.addPlayerToTheWorld(player);
     scan = new Scanner("1\n");
     boolean result = move.execute(twf, out, scan);
 
     assertTrue(result);
-    assertTrue(out.toString().contains("Enter a move for"));
+    assertTrue(out.getOutput().contains("Enter a move for"));
     assertEquals(1, player.getSpace().getId());
   }
 
@@ -63,7 +63,7 @@ public class MoveTest {
     scan = new Scanner("");
     boolean result = move.execute(twf, out, scan);
     assertTrue(result);
-    assertTrue(out.toString().contains("Player1 has already moved to"));
+    assertTrue(out.getOutput().contains("Player1 has already moved to"));
   }
 
   @Test
@@ -71,7 +71,7 @@ public class MoveTest {
     boolean result = move.execute(null, out, scan);
 
     assertFalse(result);
-    assertTrue(out.toString().contains("An error occurred"));
+    assertTrue(out.getOutput().contains("An error occurred"));
   }
 
   @Test
@@ -82,10 +82,10 @@ public class MoveTest {
         "/Users/yingwang/eclipse-workspace/Local-TheWorld/TheWorld/res/sampleInput.txt"));
 
     twf.addPlayerToTheWorld(player);
-    scan = new Scanner("26\n");
+    scan = new Scanner("26\n1\n");
     boolean result = move.execute(twf, out, scan);
 
-    assertFalse(result);
-    assertTrue(out.toString().contains("Wrong input, please re-enter the space number."));
+    assertTrue(result);
+    assertTrue(out.getOutput().contains("Wrong input, please re-enter the space number."));
   }
 }

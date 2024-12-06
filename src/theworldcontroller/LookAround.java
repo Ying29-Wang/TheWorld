@@ -1,6 +1,7 @@
 package theworldcontroller;
 
-import java.io.IOException;
+
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import theworld.Player;
 import theworld.TheWorldFacade;
@@ -13,26 +14,26 @@ import theworld.TheWorldFacade;
 public class LookAround implements CommandInterface {
 
   @Override
-  public boolean execute(TheWorldFacade twf, Appendable out, Scanner in) {
-    try {
-      Player p = twf.getTurnOfGame();
-      String lookingaround = twf.lookAroundFromSpace(p);
-      if (lookingaround != null) {
-        out.append(lookingaround);
-        twf.nextTurn();
-        twf.moveTargetToNext();
-        out.append(String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
-            twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
-        if (twf.getPet() != null) {
-          twf.movePetToNext();
-          out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
-              twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
-        }
-        return true;
+  public boolean execute(TheWorldFacade twf, AdapterInterface adapter, Scanner in)
+      throws IllegalStateException  {
+    Player p = twf.getTurnOfGame();
+    String lookingaround = twf.lookAroundFromSpace(p);
+    if (lookingaround != null) {
+      adapter.setOutput(lookingaround);
+      twf.nextTurn();
+      twf.moveTargetToNext();
+      adapter.setOutput(String.format("%s has already moved to No. %d %s\n", 
+          twf.getTarget().getName(),
+          twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
+      if (twf.getPet() != null) {
+        twf.movePetToNext();
+        adapter.setOutput(String.format("%s has already moved to No. %d %s\n", 
+            twf.getPet().getName(),
+            twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
       }
-      return false;
-    } catch (IOException e) {
-      return false;
+      return true;
     }
+    return false;
+   
   }
 }

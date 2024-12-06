@@ -344,7 +344,7 @@ public class TheWorldFacade {
       int column = 0;
       int row = 0;
       int health = 0;
-      int spaceNumber = 0;
+      
       String[] word;
       // parse first line to create the world
       if ((firstline = br.readLine().trim()) != null) {
@@ -389,6 +389,7 @@ public class TheWorldFacade {
         spacesline = br.readLine();
       }
       // parse space line to add Spaces into the world
+      int spaceNumber = 0;
       if (spacesline != null) {
         word = spacesline.split("\\s+");
         if ((!word[0].isEmpty()) && (word[0].matches("\\d+"))) {

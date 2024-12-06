@@ -7,9 +7,10 @@ import java.util.Objects;
  * Also, it gives the current position and target position of the target.
  */
 public class Target implements CharacterInterface {
-  private String name;
+ 
   private Space space;
-  private int health; 
+  private int health;
+  private String name; 
 
   /**
    * Construct the target with a given name, amount of health.

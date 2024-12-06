@@ -1,5 +1,6 @@
 package theworldcontroller;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import theworld.TheWorldFacade;
 
@@ -16,10 +17,11 @@ public interface CommandInterface {
    * 
    * @param twf  The model access object {@link TheWorldFacade} to be used by the
    *             command.
-   * @param out  The output destination where the command can write its results.
+   * @param adapter  The output destination where the command can write its results.
    * @param scan The input scanner to read any necessary input for the command.
    * @return true if the command is successfully executed, otherwise false.
    */
-  boolean execute(TheWorldFacade twf, Appendable out, Scanner scan);
+  boolean execute(TheWorldFacade twf, AdapterInterface adapter, Scanner scan)
+      throws NoSuchElementException;
 
 }

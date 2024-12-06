@@ -21,7 +21,7 @@ public class PickupTest {
 
   private Pickup pickup;
   private TheWorldFacade twf;
-  private Appendable out;
+  private MockAdapter out;
   private Scanner scan;
 
   /**
@@ -33,7 +33,7 @@ public class PickupTest {
   @Before
   public void setUp() throws FileNotFoundException {
     pickup = new Pickup();
-    out = new StringBuilder();
+    out = new MockAdapter(new StringBuilder());
 
   }
 
@@ -50,7 +50,7 @@ public class PickupTest {
     boolean result = pickup.execute(twf, out, scan);
 
     assertFalse(result);
-    assertEquals("No item list in the room.\n", out.toString());
+    assertEquals("No item list in the room.\n", out.getOutput());
   }
 
   @Test
@@ -68,7 +68,7 @@ public class PickupTest {
 
     assertFalse(result);
     assertTrue(
-        out.toString().contains(String.format("%s can't have more items.\n", player.getName())));
+        out.getOutput().contains(String.format("%s can't have more items.\n", player.getName())));
   }
 
   @Test
@@ -86,7 +86,7 @@ public class PickupTest {
 
     assertTrue(result);
     assertEquals(((Space) twf.getSpaces().get(8)).getItems().size(), 1);
-    assertTrue(out.toString()
+    assertTrue(out.getOutput()
         .contains(String.format("The item has been picked up by %s.\n", player.getName())));
   }
 
@@ -105,19 +105,9 @@ public class PickupTest {
 
     assertTrue(result);
     assertEquals(((Space) twf.getSpaces().get(8)).getItems().size(), 1);
-    assertTrue(out.toString()
+    assertTrue(out.getOutput()
         .contains(String.format("The item had been picked up by %s.\n", player.getName())));
   }
 
-  @Test
-  public void testExecute_ExceptionHandling() throws IOException {
-    twf = new TheWorldFacade();
-    twf.parseTheWorld(new FileReader(
-        "/Users/yingwang/eclipse-workspace/Local-TheWorld/TheWorld/res/sampleInput.txt"));
-
-    boolean result = pickup.execute(twf, out, null);
-
-    assertFalse(result);
-    assertTrue(out.toString().contains("An error occurred"));
-  }
+  
 }

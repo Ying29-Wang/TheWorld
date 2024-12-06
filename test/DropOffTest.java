@@ -19,7 +19,7 @@ public class DropOffTest {
   private DropOff dropOff;
   private Pickup pickup;
   private TheWorldFacade twf;
-  private Appendable out;
+  private MockAdapter adapter;
   private Scanner scan;
 
   /**
@@ -34,7 +34,7 @@ public class DropOffTest {
     twf = new TheWorldFacade();
     twf.parseTheWorld(new FileReader(
         "/Users/yingwang/eclipse-workspace/Local-TheWorld/TheWorld/res/sampleInput.txt"));
-    out = new StringBuilder();
+    
     // out = System.out;
   }
 
@@ -42,13 +42,15 @@ public class DropOffTest {
   public void testExecuteSuccessManual() {
     Player player = new Player(1, "Player1", 1, false);
     twf.addPlayerToTheWorld(player);
+    
     player.move(twf.getSpaces().get(0));
     scan = new Scanner("4\n4\n");
-    pickup.execute(twf, out, scan);
+    adapter = new MockAdapter(new StringBuffer());
+    pickup.execute(twf, adapter, scan);
     // scan = new Scanner("4\n");
-    boolean result = dropOff.execute(twf, out, scan);
+    boolean result = dropOff.execute(twf, adapter, scan);
     assertTrue(result);
-    assertTrue(out.toString().contains("The item has been dropped off by Player1."));
+    assertTrue(adapter.getOutput().contains("The item has been dropped off by Player1."));
   }
 
   @Test
@@ -57,11 +59,12 @@ public class DropOffTest {
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(0));
     scan = new Scanner("");
-    pickup.execute(twf, out, scan);
+    adapter = new MockAdapter(new StringBuffer());
+    pickup.execute(twf, adapter, scan);
 
-    boolean result = dropOff.execute(twf, out, scan);
+    boolean result = dropOff.execute(twf, adapter, scan);
     assertTrue(result);
-    assertTrue(out.toString().contains("The item had been left to the space"));
+    assertTrue(adapter.getOutput().contains("The item had been left to the space"));
   }
 
   @Test
@@ -70,10 +73,11 @@ public class DropOffTest {
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(0));
     scan = new Scanner("");
-    boolean result = dropOff.execute(twf, out, scan);
+    adapter = new MockAdapter(new StringBuffer());
+    boolean result = dropOff.execute(twf, adapter, scan);
 
     assertFalse(result);
-    assertTrue(out.toString().contains("No item carried by Player1."));
+    assertTrue(adapter.getOutput().contains("No item carried by Player1."));
   }
 
   @Test
@@ -82,10 +86,12 @@ public class DropOffTest {
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(0));
     scan = new Scanner("4\n");
-    pickup.execute(twf, out, scan);
-    scan = new Scanner("10\n");
-    boolean result = dropOff.execute(twf, out, scan);
-    assertFalse(result);
-    assertTrue(out.toString().contains("Wrong input, please re-enter space number."));
+    adapter = new MockAdapter(new StringBuffer());
+    
+    pickup.execute(twf, adapter, scan);
+    scan = new Scanner("10\n4\n");
+    boolean result = dropOff.execute(twf, adapter, scan);
+    assertTrue(result);
+    assertTrue(adapter.getOutput().contains("Wrong input, please re-enter space number."));
   }
 }

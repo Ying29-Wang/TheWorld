@@ -2,6 +2,7 @@ package theworldcontroller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import theworld.ItemInterface;
@@ -17,52 +18,50 @@ import theworld.TheWorldFacade;
 public class Attempt implements CommandInterface {
 
   @Override
-  public boolean execute(TheWorldFacade twf, Appendable out, Scanner scan) {
+  public boolean execute(TheWorldFacade twf, AdapterInterface adapter, Scanner scan)
+      throws IllegalStateException  {
     Player p = twf.getTurnOfGame();
-    try {
-      if (p.getItems().size() > 0) {
-        if (p.isAutomatic()) {
-          ItemInterface attackItem = getMaxHurtItem(p.getItems());
-          out.append(String.format("%s is trying to attack target by using %s \n", p.getName(),
-              attackItem.getName()));
-          if (!twf.beSeen(p)) {
-            int hurt = Math.min(attackItem.getDamage(), twf.getTarget().getHealth());
-            twf.attempt(hurt);
-            out.append(String.format(
-                "The Target has been attacked by %s and cause %d hurt. "
-                    + "Health number is left for %d\n",
-                attackItem.getName(), hurt, twf.getTarget().getHealth()));
-          } else {
-            out.append("attacked false beacause somebody is watching you\n");
-          }
-          p.removeItem(attackItem);
-          twf.moveItemToEvidences(attackItem);
-          return true;
-        } else {
-          out.append("Please pick an item showing below.\n");
-          for (ItemInterface i : p.getItems()) {
-            out.append(String.format("%d. %s ", i.getId(), i.getName()));
-          }
-          out.append("\n");
-
-          handleManualAttempt(p, twf, out, scan);
-          return true;
-        }
-      } else {
+    if (p.getItems().size() > 0) {
+      if (p.isAutomatic()) {
+        ItemInterface attackItem = getMaxHurtItem(p.getItems());
+        adapter.setOutput(String.format("%s is trying to attack target by using %s \n", 
+            p.getName(),
+            attackItem.getName()));
         if (!twf.beSeen(p)) {
-          twf.attempt(1);
-          out.append(String.format(
-              "%s is poking him in the eye and hurt %d Health number is left for %d\n", p.getName(),
-              1, twf.getTarget().getHealth()));
-
-          return true;
+          int hurt = Math.min(attackItem.getDamage(), twf.getTarget().getHealth());
+          twf.attempt(hurt);
+          adapter.setOutput(String.format(
+              "The Target has been attacked by %s and cause %d hurt. "
+                  + "Health number is left for %d\n",
+              attackItem.getName(), hurt, twf.getTarget().getHealth()));
         } else {
-          out.append("attacked false beacause somebody is watching you\n");
-          return true;
+          adapter.setOutput("attacked false beacause somebody is watching you\n");
         }
+        p.removeItem(attackItem);
+        twf.moveItemToEvidences(attackItem);
+        return true;
+      } else {
+        adapter.setOutput("Please pick an item showing below.\n");
+        for (ItemInterface i : p.getItems()) {
+          adapter.setOutput(String.format("%d. %s ", i.getId(), i.getName()));
+        }
+        adapter.setOutput("\n");
+
+        handleManualAttempt(p, twf, adapter, scan);
+        return true;
       }
-    } catch (IOException e) {
-      return false;
+    } else {
+      if (!twf.beSeen(p)) {
+        twf.attempt(1);
+        adapter.setOutput(String.format(
+            "%s is poking him in the eye and hurt %d Health number is left for %d\n", p.getName(),
+            1, twf.getTarget().getHealth()));
+
+        return true;
+      } else {
+        adapter.setOutput("attacked false beacause somebody is watching you\n");
+        return true;
+      }
     }
   }
 
@@ -83,14 +82,15 @@ public class Attempt implements CommandInterface {
    * continuously prompts the player to enter an item number until a valid item is
    * picked up.
    * 
-   * @param p    the player attempting to pick up the item
-   * @param twf  the facade providing access to the game's world and items
-   * @param out  the appendable output to which messages are written
+   * @param p the player attempting to pick up the item
+   * @param twf the facade providing access to the game's world and items
+   * @param adapter the output to which messages are written
    * @param scan the scanner used to read input from the player
    * @throws IOException if an I/O error occurs while writing to the output
    */
-  private void handleManualAttempt(Player p, TheWorldFacade twf, Appendable out, Scanner scan)
-      throws IOException {
+  private void handleManualAttempt (Player p, TheWorldFacade twf,
+      AdapterInterface adapter, Scanner scan)
+      throws IllegalStateException  {
     while (true) {
       String temp = scan.nextLine();
       if (isValidItemId(temp, p)) {
@@ -99,7 +99,7 @@ public class Attempt implements CommandInterface {
           int hurt = Math.min(twf.getTarget().getHealth(), it.getDamage());
           boolean result = twf.attempt(hurt);
           if (result) {
-            out.append(String.format(
+            adapter.setOutput(String.format(
                 "The Target has been attacked by %s and cause %d hurt. "
                     + "Health number is left for %d\n",
                 it.getName(), hurt, twf.getTarget().getHealth()));
@@ -108,16 +108,16 @@ public class Attempt implements CommandInterface {
             twf.moveItemToEvidences(it);
             return;
           } else {
-            out.append("Wrong input, please re-enter the item number.\n");
+            adapter.setOutput("Wrong input, please re-enter the item number.\n");
           }
         } else {
-          out.append("attacked false beacause somebody is watching you\n");
+          adapter.setOutput("attacked false beacause somebody is watching you\n");
           p.removeItem(it);
           twf.moveItemToEvidences(it);
           return;
         }
       } else {
-        out.append("Wrong input, please re-enter the item number.\n");
+        adapter.setOutput("Wrong input, please re-enter the item number.\n");
       }
     }
   }

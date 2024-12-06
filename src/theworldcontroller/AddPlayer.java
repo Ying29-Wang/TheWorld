@@ -1,6 +1,6 @@
 package theworldcontroller;
 
-import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import theworld.Player;
 import theworld.TheWorldFacade;
@@ -12,35 +12,32 @@ import theworld.TheWorldFacade;
 public class AddPlayer implements CommandInterface {
 
   @Override
-  public boolean execute(TheWorldFacade twf, Appendable out, Scanner scan) {
-    try {
-      out.append("Add a player controlled by computer? Press Y to create a robot, "
+  public boolean execute(TheWorldFacade twf, AdapterInterface adapter, Scanner scan)
+      throws IllegalStateException {
+    if (twf.getPlayers().size() < 10) {
+      adapter.setOutput("Add a player controlled by computer? Press Y to create a robot, "
           + "or any other key to create a human-controlled player\n");
       String temp = scan.nextLine();
       boolean isAutomatic = "Y".equalsIgnoreCase(temp);
-      out.append("Please enter the name: \n");
+      adapter.setOutput("Please enter the name: \n");
       String newPerson;
       do {
         newPerson = scan.nextLine();
         if (!newPerson.matches("^[a-zA-Z0-9]+$")) {
-          out.append("Wrong input, please enter the name:\n");
+          adapter.setOutput("Wrong input, please enter the name:\n");
           newPerson = null;
         }
       } while (newPerson == null);
 
       if (twf.addPlayerToTheWorld(new Player(twf.getPlayers().size(), newPerson, 5, isAutomatic))) {
-        out.append(String.format("New player %s has been added\n", newPerson));
+        adapter.setOutput(String.format("New player %s has been added\n", newPerson));
         return true;
       } else {
-        out.append("Something went wrong, player could not be added! Try again\n");
+        adapter.setOutput("Something went wrong, player could not be added! Try again\n");
         return false;
       }
-    } catch (IOException e) {
-      try {
-        out.append("An error occurred: ").append(e.getMessage()).append("\n");
-      } catch (IOException ignored) {
-        return false;
-      }
+    } else {
+      adapter.setOutput("There are too many players in the game, can't add any more players.\n");
       return false;
     }
   }

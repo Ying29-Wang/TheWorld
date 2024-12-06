@@ -20,7 +20,7 @@ public class MovePetTest {
 
   private MovePet mp;
   private TheWorldFacade twf;
-  private Appendable out;
+  private MockAdapter out;
   private Scanner scan;
   private Player player;
 
@@ -38,16 +38,16 @@ public class MovePetTest {
 
     twf.addPlayerToTheWorld(player);
     player.move(twf.getSpaces().get(1));
-    out = new StringBuilder();
   }
 
   @Test
   public void testExecute() {
     twf.getTurnOfGame();
     scan = new Scanner("1\n");
+    out = new MockAdapter(new StringBuffer());
     boolean result = mp.execute(twf, out, scan);
     assertTrue(result);
-    assertTrue(out.toString().contains("has already moved to No. 1"));
+    assertTrue(out.getOutput().contains("has already moved to No. 1"));
     assertEquals(1, twf.getPet().getSpace().getId());
   }
 
@@ -58,24 +58,14 @@ public class MovePetTest {
   public void testInvisible() {
     twf.getTurnOfGame();
     scan = new Scanner("1\n");
+    out = new MockAdapter(new StringBuffer());
+    
     boolean result = mp.execute(twf, out, scan);
-    System.out.println(out.toString());
+    System.out.println(out.getOutput());
     assertTrue(result);
     assertFalse(twf.getSpaces().get(1).isVisible());
     assertTrue(twf.getSpaces().get(0).isVisible());
     assertEquals(1, twf.getPet().getSpace().getId());
-  }
-
-  /**
-   * test take in null expected message for error occurred.
-   */
-  @Test
-  public void testExecuteWithException() throws IOException {
-    twf.getTurnOfGame();
-    boolean result = mp.execute(null, out, scan);
-
-    assertFalse(result);
-    assertTrue(out.toString().contains("An error occurred"));
   }
 
   /**
@@ -84,11 +74,13 @@ public class MovePetTest {
   @Test
   public void testIsValidSpaceId() {
     twf.getTurnOfGame();
-    scan = new Scanner("26\n");
+    scan = new Scanner("26\n1\n");
+    out = new MockAdapter(new StringBuffer());
+    
     boolean result = mp.execute(twf, out, scan);
 
-    assertFalse(result);
-    assertTrue(out.toString().contains("Wrong input, please re-enter the space number."));
+    assertTrue(result);
+    assertTrue(out.getOutput().contains("Wrong input, please re-enter the space number."));
   }
 
 }

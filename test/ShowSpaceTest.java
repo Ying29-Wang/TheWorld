@@ -20,7 +20,7 @@ public class ShowSpaceTest {
 
   private ShowSpace showSpace;
   private TheWorldFacade twf;
-  private Appendable out;
+  private MockAdapter out;
   private Scanner scan;
   private Move move;
 
@@ -34,7 +34,7 @@ public class ShowSpaceTest {
   public void setUp() throws FileNotFoundException {
     showSpace = new ShowSpace();
     move = new Move();
-    out = new StringBuilder();
+    out = new MockAdapter(new StringBuilder());
   }
 
   @Test
@@ -49,8 +49,8 @@ public class ShowSpaceTest {
     scan = new Scanner("1\n");
     boolean result = showSpace.execute(twf, out, scan);
     assertTrue(result);
-    assertTrue(out.toString().contains("please pick a space to show description"));
-    assertTrue(out.toString().contains(twf.getSpaces().get(1).toString()));
+    assertTrue(out.getOutput().contains("please pick a space to show description"));
+    assertTrue(out.getOutput().contains(twf.getSpaces().get(1).toString()));
   }
 
   @Test
@@ -67,8 +67,8 @@ public class ShowSpaceTest {
     boolean result = showSpace.execute(twf, out, scan);
 
     assertTrue(result);
-    assertTrue(out.toString().contains("please pick a space to show description"));
-    assertTrue(out.toString().contains("Wrong input, please re-enter the space number."));
+    assertTrue(out.getOutput().contains("please pick a space to show description"));
+    assertTrue(out.getOutput().contains("Wrong input, please re-enter the space number."));
   }
 
   @Test
@@ -84,39 +84,9 @@ public class ShowSpaceTest {
     boolean result = showSpace.execute(twf, out, scan);
 
     assertFalse(result);
-    assertTrue(out.toString().contains("There is not enough spaces in the game."));
+    assertTrue(out.getOutput().contains("There is not enough spaces in the game."));
   }
 
-  @Test
-  public void testExecuteWithIoException() throws IOException {
-    Player player = new Player(0, "Player1", 1, false);
-    twf = new TheWorldFacade();
-    twf.parseTheWorld(new FileReader(
-        "/Users/yingwang/eclipse-workspace/Local-TheWorld/TheWorld/res/sampleInput.txt"));
-
-    twf.addPlayerToTheWorld(player);
-    move.execute(twf, out, scan);
-    scan = new Scanner("1\n");
-    Appendable outWithIoException = new Appendable() {
-      @Override
-      public Appendable append(CharSequence csq) throws IOException {
-        throw new IOException();
-      }
-
-      @Override
-      public Appendable append(CharSequence csq, int start, int end) throws IOException {
-        throw new IOException();
-      }
-
-      @Override
-      public Appendable append(char c) throws IOException {
-        throw new IOException();
-      }
-    };
-    boolean result = showSpace.execute(twf, outWithIoException, scan);
-
-    assertFalse(result);
-  }
 
   @Test
   public void testExecuteWithTargetInSpace() throws IOException {
@@ -130,13 +100,13 @@ public class ShowSpaceTest {
     boolean result = showSpace.execute(twf, out, scan);
     assertTrue(result);
     assertTrue(
-        out.toString().contains(String.format("%s is in the space.", twf.getTarget().getName())));
-    assertTrue(out.toString().contains(twf.getSpaces().get(0).toString()));
+        out.getOutput().contains(String.format("%s is in the space.", twf.getTarget().getName())));
+    assertTrue(out.getOutput().contains(twf.getSpaces().get(0).toString()));
     move.execute(twf, out, scan);
     result = showSpace.execute(twf, out, scan);
     assertTrue(result);
     assertTrue(
-        out.toString().contains(String.format("%s is in the space.", twf.getTarget().getName())));
-    assertTrue(out.toString().contains(twf.getSpaces().get(1).toString()));
+        out.getOutput().contains(String.format("%s is in the space.", twf.getTarget().getName())));
+    assertTrue(out.getOutput().contains(twf.getSpaces().get(1).toString()));
   }
 }

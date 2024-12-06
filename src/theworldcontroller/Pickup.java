@@ -1,6 +1,7 @@
 package theworldcontroller;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import theworld.Item;
@@ -18,37 +19,29 @@ import theworld.TheWorldFacade;
 public class Pickup implements CommandInterface {
 
   @Override
-  public boolean execute(TheWorldFacade twf, Appendable out, Scanner scan) {
-    try {
-      Player p = twf.getTurnOfGame();
-      if (p.getSpace().getItems().isEmpty()) {
-        out.append("No item list in the room.\n");
-        return false;
-      }
-      if (p.getItems().size() == p.getItemLimit()) {
-        out.append(String.format("%s can't have more items.\n", p.getName()));
-        return false;
-      }
-      out.append("Please pick an item showing below.\n");
-      for (ItemInterface i : p.getSpace().getItems()) {
-        out.append(String.format("%d. %s ", i.getId(), i.getName()));
-      }
-      out.append("\n");
-
-      if (!p.isAutomatic()) {
-        handleManualPickup(p, twf, out, scan);
-      } else {
-        handleAutomaticPickup(p, twf, out);
-      }
-      return true;
-    } catch (IOException e) {
-      try {
-        out.append("An error occurred: ").append(e.getMessage()).append("\n");
-      } catch (IOException ignored) {
-        return false;
-      }
+  public boolean execute(TheWorldFacade twf, AdapterInterface adapter, Scanner scan)
+      throws IllegalStateException  {
+    Player p = twf.getTurnOfGame();
+    if (p.getSpace().getItems().isEmpty()) {
+      adapter.setOutput("No item list in the room.\n");
       return false;
     }
+    if (p.getItems().size() == p.getItemLimit()) {
+      adapter.setOutput(String.format("%s can't have more items.\n", p.getName()));
+      return false;
+    }
+    adapter.setOutput("Please pick an item showing below.\n");
+    for (ItemInterface i : p.getSpace().getItems()) {
+      adapter.setOutput(String.format("%d. %s ", i.getId(), i.getName()));
+    }
+    adapter.setOutput("\n");
+
+    if (!p.isAutomatic()) {
+      handleManualPickup(p, twf, adapter, scan);
+    } else {
+      handleAutomaticPickup(p, twf, adapter);
+    }
+    return true;
   }
 
   /**
@@ -56,27 +49,28 @@ public class Pickup implements CommandInterface {
    * continuously prompts the player to enter an item number until a valid item is
    * picked up.
    * 
-   * @param p    the player attempting to pick up the item
+   * @param p the player attempting to pick up the item
    * @param twf  the facade providing access to the game's world and items
-   * @param out  the appendable output to which messages are written
+   * @param adapter the output interface to which messages are written
    * @param scan the scanner used to read input from the player
    * @throws IOException if an I/O error occurs while writing to the output
    */
-  private void handleManualPickup(Player p, TheWorldFacade twf, Appendable out, Scanner scan)
-      throws IOException {
+  private void handleManualPickup(Player p, TheWorldFacade twf, 
+      AdapterInterface adapter, Scanner scan)
+      throws IllegalStateException  {
     while (true) {
       String temp = scan.nextLine();
       if (isValidItemId(temp, p)) {
         boolean result = p.pickup((Item) twf.getItemById(Integer.parseInt(temp)));
         if (result) {
-          out.append(String.format("The item has been picked up by %s.\n", p.getName()));
-          proceedToNextTurn(twf, out);
+          adapter.setOutput(String.format("The item has been picked up by %s.\n", p.getName()));
+          proceedToNextTurn(twf, adapter);
           return;
         } else {
-          out.append("Wrong input, please re-enter the item number.\n");
+          adapter.setOutput("Wrong input, please re-enter the item number.\n");
         }
       } else {
-        out.append("Wrong input, please re-enter the item number.\n");
+        adapter.setOutput("Wrong input, please re-enter the item number.\n");
       }
     }
   }
@@ -89,18 +83,16 @@ public class Pickup implements CommandInterface {
    *
    * @param p   the player who will pick up the item
    * @param twf the facade of the game world
-   * @param out the appendable output to write messages to
-   * @throws IOException if an I/O error occurs
+   * @param out the appendable output to write messages 
    */
-  private void handleAutomaticPickup(Player p, TheWorldFacade twf, Appendable out)
-      throws IOException {
+  private void handleAutomaticPickup(Player p, TheWorldFacade twf, AdapterInterface adapter) {
     if (p.getSpace().getItems().isEmpty()) {
-      out.append("No item list in the room.\n");
+      adapter.setOutput("No item list in the room.\n");
     } else {
       int random = (int) (Math.random() * p.getSpace().getItems().size());
       p.pickup(p.getSpace().getItems().get(random));
-      out.append(String.format("The item had been picked up by %s.\n", p.getName()));
-      proceedToNextTurn(twf, out);
+      adapter.setOutput(String.format("The item had been picked up by %s.\n", p.getName()));
+      proceedToNextTurn(twf, adapter);
     }
   }
 
@@ -110,7 +102,7 @@ public class Pickup implements CommandInterface {
    * available in the player's current space.
    *
    * @param temp the item ID to validate as a string
-   * @param p    the player whose current space's items are to be checked
+   * @param p the player whose current space's items are to be checked
    * @return true if the item ID is valid, false otherwise
    */
   private boolean isValidItemId(String temp, Player p) {
@@ -121,21 +113,21 @@ public class Pickup implements CommandInterface {
   /**
    * Proceeds to the next turn in the game by invoking the nextTurn and
    * moveTargetToNext methods on the provided TheWorldFacade instance. It then
-   * appends a message to the provided Appendable indicating the target's new
+   * appends a message to the provided AdapterInterface indicating the target's new
    * location.
    *
    * @param twf the TheWorldFacade instance representing the game state
-   * @param out the Appendable to which the message will be appended
-   * @throws IOException if an I/O error occurs while appending the message
+   * @param adapter the output interface to which the message will be appended
    */
-  private void proceedToNextTurn(TheWorldFacade twf, Appendable out) throws IOException {
+  private void proceedToNextTurn(TheWorldFacade twf, AdapterInterface adapter) {
     twf.nextTurn();
     twf.moveTargetToNext();
-    out.append(String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
+    adapter.setOutput(String.format("%s has already moved to No. %d %s\n", 
+        twf.getTarget().getName(),
         twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
     if (twf.getPet() != null) {
       twf.movePetToNext();
-      out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
+      adapter.setOutput(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
           twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
     }
 

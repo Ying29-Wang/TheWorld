@@ -1,6 +1,7 @@
 package theworldcontroller;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import theworld.Item;
@@ -16,33 +17,30 @@ import theworld.TheWorldFacade;
 public class DropOff implements CommandInterface {
 
   @Override
-  public boolean execute(TheWorldFacade twf, Appendable out, Scanner scan) {
+  public boolean execute(TheWorldFacade twf, AdapterInterface adapter, Scanner scan)
+      throws IllegalStateException  {
     try {
       Player p = twf.getTurnOfGame();
       if (p.getItems().isEmpty()) {
-        out.append(String.format("No item carried by %s.\n", p.getName()));
+        adapter.setOutput(String.format("No item carried by %s.\n", p.getName()));
         return false;
       }
-      out.append("Please leave an item in the space, items are shown below.\n");
+      adapter.setOutput("Please leave an item in the space, items are shown below.\n");
       for (ItemInterface i : p.getItems()) {
-        out.append(String.format("%d. %s ", i.getId(), i.getName()));
+        adapter.setOutput(String.format("%d. %s ", i.getId(), i.getName()));
       }
-      out.append("\n");
+      adapter.setOutput("\n");
 
       if (!p.isAutomatic()) {
-        handleManualDropOff(p, twf, out, scan);
+        handleManualDropOff(p, twf, adapter, scan);
       } else {
-        handleAutomaticDropOff(p, twf, out);
+        handleAutomaticDropOff(p, twf, adapter);
       }
       return true;
     } catch (IOException e) {
-      try {
-        out.append("An error occurred: ").append(e.getMessage()).append("\n");
-      } catch (IOException ignored) {
-        return false;
-      }
-      return false;
+      adapter.setOutput("An error occurred: " + e.getMessage() + "\n");
     }
+    return false;
   }
 
   /**
@@ -56,21 +54,21 @@ public class DropOff implements CommandInterface {
    * @param scan the scanner object used to read player input
    * @throws IOException if an I/O error occurs
    */
-  private void handleManualDropOff(Player p, TheWorldFacade twf, Appendable out, Scanner scan)
-      throws IOException {
+  private void handleManualDropOff(Player p, TheWorldFacade twf, AdapterInterface adapter,
+      Scanner scan) throws IllegalStateException  {
     while (true) {
       String temp = scan.nextLine();
       if (isValidItemId(temp, p)) {
         boolean result = p.leaveItemToTheSpace((Item) twf.getItemById(Integer.parseInt(temp)));
         if (result) {
-          out.append(String.format("The item has been dropped off by %s.\n", p.getName()));
-          proceedToNextTurn(twf, out);
+          adapter.setOutput(String.format("The item has been dropped off by %s.\n", p.getName()));
+          proceedToNextTurn(twf, adapter);
           return;
         } else {
-          out.append("Wrong input, please re-enter space number.\n");
+          adapter.setOutput("Wrong input, please re-enter space number.\n");
         }
       } else {
-        out.append("Wrong input, please re-enter space number.\n");
+        adapter.setOutput("Wrong input, please re-enter space number.\n");
       }
     }
   }
@@ -81,21 +79,21 @@ public class DropOff implements CommandInterface {
    * the player is not carrying any items, a message is appended indicating no
    * items are carried.
    * 
-   * @param p   the player who is performing the drop-off
+   * @param p the player who is performing the drop-off
    * @param twf the facade of the world where the game is taking place
-   * @param out the appendable output to which messages are written
+   * @param out the output Interface to which messages are written
    * @throws IOException if an I/O error occurs while appending to the output
    */
-  private void handleAutomaticDropOff(Player p, TheWorldFacade twf, Appendable out)
+  private void handleAutomaticDropOff(Player p, TheWorldFacade twf, AdapterInterface adapter)
       throws IOException {
     if (p.getItems().isEmpty()) {
-      out.append("No item carried by the player.\n");
+      adapter.setOutput("No item carried by the player.\n");
     } else {
       int random = (int) (Math.random() * p.getItems().size());
       p.leaveItemToTheSpace((Item) p.getItems().get(random));
-      out.append(String.format("The item had been left to the space %s by %s.\n",
+      adapter.setOutput(String.format("The item had been left to the space %s by %s.\n",
           p.getSpace().getName(), p.getName()));
-      proceedToNextTurn(twf, out);
+      proceedToNextTurn(twf, adapter);
     }
   }
 
@@ -105,7 +103,7 @@ public class DropOff implements CommandInterface {
    * of items.
    *
    * @param temp the item ID to validate as a string
-   * @param p    the player whose items are to be checked
+   * @param p the player whose items are to be checked
    * @return true if the item ID is valid, false otherwise
    */
   private boolean isValidItemId(String temp, Player p) {
@@ -116,24 +114,23 @@ public class DropOff implements CommandInterface {
   /**
    * Proceeds to the next turn in the game by invoking the nextTurn and
    * moveTargetToNext methods on the provided TheWorldFacade instance. It then
-   * appends a message to the provided Appendable output, indicating the target's
+   * appends a message to the provided IOAdapter, indicating the target's
    * new location.
    *
    * @param twf the TheWorldFacade instance that manages the game state and
    *            operations.
-   * @param out the Appendable output to which the status message will be
+   * @param adapter the Interface of output to which the status message will be
    *            appended.
-   * @throws IOException if an I/O error occurs while appending the message to the
-   *                     output.
    */
-  private void proceedToNextTurn(TheWorldFacade twf, Appendable out) throws IOException {
+  private void proceedToNextTurn(TheWorldFacade twf, AdapterInterface adapter) {
     twf.nextTurn();
     twf.moveTargetToNext();
-    out.append(String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
-        twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
+    adapter
+        .setOutput(String.format("%s has already moved to No. %d %s\n", twf.getTarget().getName(),
+            twf.getTarget().getSpace().getId(), twf.getTarget().getSpace().getName()));
     if (twf.getPet() != null) {
       twf.movePetToNext();
-      out.append(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
+      adapter.setOutput(String.format("%s has already moved to No. %d %s\n", twf.getPet().getName(),
           twf.getPet().getSpace().getId(), twf.getPet().getSpace().getName()));
     }
 

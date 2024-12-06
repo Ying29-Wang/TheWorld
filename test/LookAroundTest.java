@@ -18,7 +18,7 @@ public class LookAroundTest {
   private LookAround lookAround;
   private TheWorldFacade twf;
   private TheWorldFacade twf2;
-  private Appendable out;
+  private MockAdapter out;
   private Scanner in;
   private Player player;
 
@@ -36,24 +36,25 @@ public class LookAroundTest {
         "/Users/yingwang/eclipse-workspace/Local-TheWorld/TheWorld/res/sampleInput.txt"));
     twf2.parseTheWorld(new FileReader(
         "/Users/yingwang/eclipse-workspace/Local-TheWorld/TheWorld/res/sampleInput.txt"));
-    out = new StringBuilder();
+    out = new MockAdapter(new StringBuffer());
     in = new Scanner(System.in);
     player = new Player(0, "mocker", 1, true);
     twf.addPlayerToTheWorld(player);
+    twf2.addPlayerToTheWorld(player);
   }
 
   @Test
   public void testExecuteSuccess() {
     boolean result = lookAround.execute(twf, out, in);
     assertTrue(result);
-    assertTrue(out.toString().contains("Looking around..."));
-    assertTrue(out.toString().contains("as already moved to No."));
+    assertTrue(out.getOutput().contains("Looking around..."));
+    assertTrue(out.getOutput().contains("as already moved to No."));
   }
 
-  @Test
+  @Test (expected = IllegalArgumentException.class)
   public void testExecuteFailure() {
     boolean result = lookAround.execute(twf2, out, in);
-    assertFalse(result);
+    //assertFalse(result);
   }
 
   private class TestTheWorldFacade extends TheWorldFacade {
