@@ -41,7 +41,7 @@ import theworldcontroller.AdapterInterface;
  * output panel, info panel, and world panel. It also provides methods to interact with
  * the game through dialogs and key events.
  */
-public class Viewer implements IView {
+public class Viewer implements MyView {
   private JFrame frame;
   private JMenuBar menu;
   private JScrollPane outputPanel;

@@ -5,7 +5,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Scanner;
 import theworld.TheWorldFacade;
-import theworldviewer.IView;
+import theworldviewer.MyView;
 
 /**
  * The IOAdapter class implements the AdapterInterface and serves as an adapter
@@ -13,14 +13,14 @@ import theworldviewer.IView;
  * output operations, manages game state, and facilitates communication between
  * different components.
  */
-public class IOAdapter implements AdapterInterface {
+public class IoAdapter implements AdapterInterface {
 
   private PipedInputStream pipeInput;
   private PipedOutputStream pipeOutput;
   private Scanner scan;
   private TheWorldController twc;
   private TheWorldFacade twf;
-  private IView viewer;
+  private MyView viewer;
   private String specification;
   private int turnLimit;
   private boolean moveable;
@@ -32,7 +32,7 @@ public class IOAdapter implements AdapterInterface {
    * @param viewer the IView instance to be associated with this IOAdapter
    * @throws IllegalArgumentException if the viewer is null
    */
-  public IOAdapter(IView viewer) throws IllegalArgumentException {
+  public IoAdapter(MyView viewer) throws IllegalArgumentException {
     if (viewer != null) {
       this.viewer = viewer;
       this.restart = false;

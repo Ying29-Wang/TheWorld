@@ -1,7 +1,7 @@
 package theworldcontroller;
 
 import java.io.IOException;
-import theworldviewer.IView;
+import theworldviewer.MyView;
 import theworldviewer.Viewer;
 
 /**
@@ -27,9 +27,9 @@ public class Driver {
    * @throws IOException if the specification file cannot be found.
    */
   public static void main(String[] args) {
-    IView viewer = new Viewer();   
+    MyView viewer = new Viewer();   
     try {
-      AdapterInterface adapter = new IOAdapter(viewer);
+      AdapterInterface adapter = new IoAdapter(viewer);
       viewer.setAdapter(adapter);
       if ((args[0] != null) && (args[1].trim().matches("^[0-9]+$"))) {
         adapter.startNewGame(args[0].trim(), Integer.parseInt(args[1].trim()));

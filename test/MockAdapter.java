@@ -1,5 +1,4 @@
 import java.io.IOException;
-
 import theworldcontroller.AdapterInterface;
 
 /**
@@ -7,13 +6,13 @@ import theworldcontroller.AdapterInterface;
  * It uses an Appendable object to simulate output operations.
  */
 public class MockAdapter implements AdapterInterface {
- 
+
   private Appendable out;
-  
+
   public MockAdapter(Appendable ap) {
     this.out = ap;
   }
-  
+
   @Override
   public void setInput(String s) throws IOException {
 
@@ -27,11 +26,11 @@ public class MockAdapter implements AdapterInterface {
       return;
     }
   }
-  
+
   public String getOutput() {
     return this.out.toString();
   }
-  
+
 
   @Override
   public String getPlayerInfo(int playerId) {
@@ -46,31 +45,31 @@ public class MockAdapter implements AdapterInterface {
   @Override
   public void drawGraphics(boolean redrawMap) {
     return;
-    
+
   }
 
   @Override
   public void startNewGame(String specification, int turnLimit) throws IOException {
-   return;
-    
+    return;
+
   }
 
   @Override
   public void shutOff() throws IOException {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void restartGame(String spec, int turnLimits) throws IOException {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void setMovable(boolean moveable) {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
@@ -82,7 +81,7 @@ public class MockAdapter implements AdapterInterface {
   @Override
   public void showResult(String s) {
     // TODO Auto-generated method stub
-    
+
   }
 
 }

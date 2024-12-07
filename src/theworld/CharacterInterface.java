@@ -30,8 +30,9 @@ public interface CharacterInterface {
   int getHealth();
   
   /**
-   * set the health number of the character.
-   * @return the integer number of the character
+   * Sets the health of the character.
+   *
+   * @param health the new health value to be set
    */
   void setHealth(int health);
   

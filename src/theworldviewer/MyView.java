@@ -12,7 +12,7 @@ import theworldcontroller.AdapterInterface;
  * different panels of the viewer, as well as showing game results. It extends
  * the KeyListener interface.
  */
-public interface IView extends KeyListener {
+public interface MyView extends KeyListener {
   /**
    * set adapter in the viewer.
    * 
@@ -20,27 +20,31 @@ public interface IView extends KeyListener {
    */
   void setAdapter(AdapterInterface adapter);
 
+
   /**
-   * set shown message in the output panel.
-   * 
-   * @param string for setting the panel
+   * Sets the output panel with the specified string.
+   *
+   * @param s the string to be displayed in the output panel
    */
   void setOutputPanel(String s);
 
+
   /**
-   * set shown message in the world panel.
-   * 
-   * @param string for setting the panel
-   * 
+   * Sets the world panel with the given parameters.
+   *
+   * @param spaces a list of SpaceInterface objects representing the spaces in the world
+   * @param list a list of Player objects representing the players in the world
+   * @param target a CharacterInterface object representing the target character
+   * @param redrawMap a boolean indicating whether the map should be redrawn
    */
   void setWorldPanel(List<SpaceInterface> spaces, List<Player> list, CharacterInterface target,
       boolean redrawMap);
 
+
   /**
-   * set user or target message in the info panel.
-   * 
-   * @param string for setting the panel
-   * 
+   * Sets the information panel with the provided string.
+   *
+   * @param s the string to be displayed in the information panel
    */
   void setInfoPanel(String s);
 
@@ -62,9 +66,11 @@ public interface IView extends KeyListener {
    */
   void clearOutputPanel();
 
+
   /**
-   * show game result in worldPanel.
-   * 
+   * Displays the result in the view.
+   *
+   * @param s the result string to be displayed
    */
   void showResult(String s);
 }

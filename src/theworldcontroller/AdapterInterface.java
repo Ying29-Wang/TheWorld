@@ -9,23 +9,25 @@ import java.util.Scanner;
  */
 public interface AdapterInterface {
   /**
-   * Provide the control signals to the input scanner.
+   * Sets the input with the specified string.
    *
-   * @throws IOException  
+   * @param s the input string to be set
+   * @throws IOException if an I/O error occurs
    */
   void setInput(String s) throws IOException;
 
   /**
-   * set output stream of the controller , pass msg to viewer.
+   * Sets the output with the specified string.
    *
+   * @param s the string to be set as output
    */
   void setOutput(String s);
 
   /**
-   * Retrieves the specified player information. 
-   * 
-   * @param player id
-   * @return string data for the player 
+   * Retrieves the information of a player based on the provided player ID.
+   *
+   * @param playerId the unique identifier of the player whose information is to be retrieved
+   * @return a String containing the player's information
    */
   String getPlayerInfo(int playerId);
 
@@ -37,30 +39,33 @@ public interface AdapterInterface {
   String getTargetInfo();
 
   /**
-   * draw the map in the viewer.
+   * Draws the graphics on the screen.
    *
+   * @param redrawMap a boolean indicating whether the map should be redrawn.
    */
   void drawGraphics(boolean redrawMap);
 
   /**
-   * start a new game by passing a specification.
-   * 
-   * @throws IOException
+   * Starts a new game with the given specification and turn limit.
    *
+   * @param specification the game specification as a String
+   * @param turnLimit the maximum number of turns allowed in the game
+   * @throws IOException if an I/O error occurs during the game setup
    */
   void startNewGame(String specification, int turnLimit) throws IOException;
 
   /**
    * shut off the game by mandatory.
    * @throws IOException 
-   *
    */
   void shutOff() throws IOException;
   
   /**
-   * restart the game by mandatory.
-   * @throws IOException 
+   * Restarts the game with the given specifications and turn limits.
    *
+   * @param spec the specifications for the game restart
+   * @param turnLimits the maximum number of turns allowed in the game
+   * @throws IOException if an I/O error occurs during the game restart
    */
   void restartGame(String spec, int turnLimits) throws IOException;
   
@@ -71,16 +76,16 @@ public interface AdapterInterface {
   void setMovable(boolean moveable);
 
   /**
-   * check if can a player move right now.
+   * Determines if the object is movable.
    *
+   * @return true if the object can be moved, false otherwise.
    */
   boolean getMovable();
   
   /**
-   * pass result message to the viewer.
+   * Displays the result.
    *
+   * @param s the result string to be displayed
    */
   void showResult(String s);
-  
-
 }

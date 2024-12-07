@@ -71,7 +71,7 @@ public class AddPlayerTest {
   }
   
   /**
-   * test add 10 players
+   * test add 10 players.
    */
   @Test
   public void testExecuteAddPlayer10() {

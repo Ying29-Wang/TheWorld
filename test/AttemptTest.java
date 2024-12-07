@@ -10,8 +10,6 @@ import theworld.Player;
 import theworld.TheWorldFacade;
 import theworldcontroller.AdapterInterface;
 import theworldcontroller.Attempt;
-import theworldcontroller.IOAdapter;
-
 
 /**
  * Test class for the Attempt class.
@@ -27,7 +25,7 @@ public class AttemptTest {
   private Appendable out;
 
   /**
-   * Sets up the test environment before each 
+   * Sets up the test environment before each. 
 
    * @throws Exception if an error occurs during setup
    */

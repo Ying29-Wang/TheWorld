@@ -88,7 +88,7 @@ public class Attempt implements CommandInterface {
    * @param scan the scanner used to read input from the player
    * @throws IOException if an I/O error occurs while writing to the output
    */
-  private void handleManualAttempt (Player p, TheWorldFacade twf,
+  private void handleManualAttempt(Player p, TheWorldFacade twf,
       AdapterInterface adapter, Scanner scan)
       throws IllegalStateException  {
     while (true) {

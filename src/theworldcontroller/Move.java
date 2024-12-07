@@ -126,7 +126,7 @@ public class Move implements CommandInterface {
 
   /**
    * Proceeds to the next turn in the game by invoking the necessary methods on
-   * the TheWorldFacade instance and appending the result to the provided
+   * the TheWorldFacade instance and appending the result to the provided.
    *
    * @param twf the TheWorldFacade instance that manages the game state
    * @param adapter to which the result will be exported

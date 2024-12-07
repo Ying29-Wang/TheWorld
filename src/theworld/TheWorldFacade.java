@@ -122,7 +122,7 @@ public class TheWorldFacade {
   /**
    * Adds a pet to the world.
    *
-   * @param p the pet to be added
+   * @param pet the name of the pet to be added
    * @return true if the pet was successfully added, false otherwise
    */
   public boolean addPetToTheWorld(String pet) {
@@ -130,10 +130,9 @@ public class TheWorldFacade {
   }
 
   /**
-   * move an item to the evidences list.
+   * Moves the specified item to the evidences collection in the world.
    *
-   * @param p the pet to be added
-   * 
+   * @param it the item to be moved to evidences
    */
   public void moveItemToEvidences(ItemInterface it) {
     this.world.addItemToEvidence(it);
@@ -563,10 +562,10 @@ public class TheWorldFacade {
   }
 
   /**
-   * try to attack the target.
+   * Attempts to inflict damage on the target by reducing its health.
    *
-   * @param attempt to attack the target
-   *
+   * @param hurt the amount of damage to inflict on the target
+   * @return true if the attempt was successful
    */
   public boolean attempt(int hurt) {
     this.getTarget().setHealth(this.getTarget().getHealth() - hurt);
@@ -628,9 +627,10 @@ public class TheWorldFacade {
   }
 
   /**
-   * check if the player can be seen by other players.
-   * 
-   * @param p is the player in current turn
+   * Determines if the given player can be seen by others.
+   *
+   * @param p the player to check visibility for
+   * @return true if the player can be seen by others, false otherwise
    */
   public boolean beSeen(Player p) {
     if (p.getSpace().getPlayers().size() > 1) {
