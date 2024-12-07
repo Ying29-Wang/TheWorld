@@ -8,7 +8,7 @@ import theworld.TheWorldFacade;
 import theworldviewer.MyView;
 
 /**
- * The IOAdapter class implements the AdapterInterface and serves as an adapter
+ * The IoAdapter class implements the AdapterInterface and serves as an adapter
  * between the view and the controller in the application. It handles input and
  * output operations, manages game state, and facilitates communication between
  * different components.
@@ -27,7 +27,7 @@ public class IoAdapter implements AdapterInterface {
   private boolean restart;
 
   /**
-   * Constructs an IOAdapter with the specified viewer.
+   * Constructs an IoAdapter with the specified viewer.
    *
    * @param viewer the IView instance to be associated with this IOAdapter
    * @throws IllegalArgumentException if the viewer is null

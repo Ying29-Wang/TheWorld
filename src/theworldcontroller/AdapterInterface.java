@@ -54,9 +54,11 @@ public interface AdapterInterface {
    */
   void startNewGame(String specification, int turnLimit) throws IOException;
 
+
   /**
-   * shut off the game by mandatory.
-   * @throws IOException 
+   * Shuts off the system or component.
+   *
+   * @throws IOException if an I/O error occurs during the shut off process.
    */
   void shutOff() throws IOException;
   
@@ -69,9 +71,11 @@ public interface AdapterInterface {
    */
   void restartGame(String spec, int turnLimits) throws IOException;
   
+
   /**
-   * move a player to a space when set moveable true.
+   * Sets the movable state of an object.
    *
+   * @param moveable a boolean indicating whether the object should be movable (true) or not (false)
    */
   void setMovable(boolean moveable);
 
